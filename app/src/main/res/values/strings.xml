@@ -61,9 +61,10 @@
     <!--投票界面-->
     <string name="votenum">得票数：</string>
     <string name="logout">退出</string>
-
     <!--评价界面-->
     <string name="input_evaluate_message">请输入您的评价：</string>
-
+    <!--用户信息界面-->
+    <string name="user_hint_myevaluate">我的评价</string>
+    <string name="user_hint_myfavorite">我的收藏</string>
 
 </resources>

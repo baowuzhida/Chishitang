@@ -12,7 +12,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.ScrollerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,15 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private ImageView RoundedImage;
-    private LinearLayout LRLayout;
-    private LinearLayout LInfLayout;
-    private View orderView;
-    private View personalcenterView;
-    private View specialView;
+    //    private LinearLayout LRLayout;
+//    private LinearLayout LInfLayout;
+    private View orderView,personalcenterView,specialView;
     private TextView IfLogin,show_login,Point;
+    private ScrollView scr_personal_center;
     private SwipeRefreshLayout orderswipe;
     private ListView order_listview;
-    private Button Login,Register,LogOut;
+    private Button btn_login,btn_register,btn_logout;
     private Toolbar toolbar;
     private FloatingActionButton fbbtn_shoppingcar,fbbtn_question;
     private HttpUtil httpUtil;
@@ -123,20 +125,17 @@ public class MainActivity extends AppCompatActivity {
         SharedPrefsCookieUtil scookie=new SharedPrefsCookieUtil(this);
         httpUtil = new HttpUtil(scookie);
 
-
-
         toolbar = (Toolbar)findViewById(R.id.Toolbar);
         orderView=findViewById(R.id.main_order);
         personalcenterView=findViewById(R.id.main_personalcenter);
         specialView=findViewById(R.id.main_special);
         show_login = (TextView)findViewById(R.id.order_show_login);
         orderswipe = (SwipeRefreshLayout)findViewById(R.id.order_swipe);
-        //
+
         contralToolbar();
-        initViews();
+        loadingViewPager();
 //        LoadingTitle();
-        iflogin();//判断本地是否登录 如果登陆向服务端发送一次请求
-//        contralToolbar();
+        relogin();//判断本地是否登录 如果登陆向服务端发送一次请求
         contralFab();
         //
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -191,22 +190,28 @@ public class MainActivity extends AppCompatActivity {
     }
     //个人中心信息
     public void contralPersonalcenter(){
+        scr_personal_center =(ScrollView)findViewById(R.id.person_detail_center_scroll);
+
         RoundedImage = (ImageView)findViewById(R.id.personalcenter_roundedmage);
         IfLogin = (TextView)findViewById(R.id.personalcenter_iflogin);
         Point = (TextView)findViewById(R.id.personalcenter_point);
-        Login=(Button)findViewById(R.id.personalcenter_login);
-        Register=(Button)findViewById(R.id.personalcenter_register);
-        LogOut=(Button)findViewById(R.id.personalcenter_logout);
-        LRLayout=(LinearLayout)findViewById(R.id.LRLayout);
-        LInfLayout=(LinearLayout)findViewById(R.id.LInfLayout);
+
+//        btn_login=(Button)findViewById(R.id.personalcenter_login);
+//        btn_register=(Button)findViewById(R.id.personalcenter_register);
+        btn_logout=(Button)findViewById(R.id.personalcenter_logout);
+
+//        LRLayout=(LinearLayout)findViewById(R.id.LRLayout);
+//        LInfLayout=(LinearLayout)findViewById(R.id.LInfLayout);
 
         SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
         String username=sharedPre.getString("username", "");
         String userimage=sharedPre.getString("userimage", "");
         if(username.equals("")){
             IfLogin.setText("未登录");
-            LRLayout.setVisibility(View.VISIBLE);
-            LInfLayout.setVisibility(View.GONE);
+            btn_logout.setVisibility(View.GONE);
+//            scr_personal_center.setVisibility(View.GONE);
+//            LRLayout.setVisibility(View.VISIBLE);
+//            LInfLayout.setVisibility(View.GONE);
         }
         else {
             IfLogin.setText(" 欢迎用户 "+username+" 登录");
@@ -216,26 +221,42 @@ public class MainActivity extends AppCompatActivity {
                     .placeholder(R.drawable.eat)
                     .crossFade()
                     .into(RoundedImage);
-
-            LRLayout.setVisibility(View.GONE);
-            LInfLayout.setVisibility(View.VISIBLE);
+            btn_logout.setVisibility(View.VISIBLE);
+//            LRLayout.setVisibility(View.GONE);
+//            LInfLayout.setVisibility(View.VISIBLE);
+//            scr_personal_center.setVisibility(View.VISIBLE);
 
         }
-        Login.setOnClickListener(new View.OnClickListener() {
+        IfLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                SharedPreferences sharedPre = getSharedPreferences("LoginManager", MODE_PRIVATE);
+                final String username = sharedPre.getString("username", "");
+                String password = sharedPre.getString("password", "");
+                if(!username.equals("")) {
+                    Toast.makeText(getApplicationContext(), "用户详情界面", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-        Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-        LogOut.setOnClickListener(new View.OnClickListener() {
+//        btn_login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        btn_register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+        btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(MainActivity.this)
@@ -245,13 +266,13 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 cleanShare();
-                                Toast.makeText(getApplicationContext(), "已登出", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("否", null)
                         .show();
             }
         });
+
     }
     //订单信息
     public void contralOrder() {
@@ -294,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //判断本地是否登录 如果登陆向服务端发送一次请求
-    public void iflogin() {
+    public void relogin() {
 
         SharedPreferences sharedPre = getSharedPreferences("LoginManager", MODE_PRIVATE);
         final String username = sharedPre.getString("username", "");
@@ -329,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
 //        String password = sharedPre.getString("password","");
 //        return !(username.equals("") || password.equals(""));
     }
-    //登出
+    //退出时清除本地保存的用户信息
     public void cleanShare(){ //清除SharedPreferences中LoginManager数据
 
         ListView order_listview = (ListView)findViewById(R.id.order_listview);
@@ -348,14 +369,17 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 String type=(String)msg.obj;
 
-
                 if(msg.obj==null){
                     Toast.makeText(getApplicationContext(), "服务端连接失败", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 if(type.equals("ok")){
                     IfLogin.setText("未登录");
-                    LRLayout.setVisibility(View.VISIBLE);
-                    LInfLayout.setVisibility(View.GONE);
+
+                    btn_logout.setVisibility(View.GONE);
+//                    LRLayout.setVisibility(View.VISIBLE);
+//                    scr_personal_center.setVisibility(View.GONE);
+//                    LInfLayout.setVisibility(View.GONE);
                     RoundedImage.setImageDrawable(getResources().getDrawable(R.drawable.eat));
                     SharedPreferences sharedPre = getSharedPreferences("LoginManager", MODE_PRIVATE);;
                     SharedPreferences.Editor editor=sharedPre.edit();
@@ -376,7 +400,7 @@ public class MainActivity extends AppCompatActivity {
         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","type=logout",logouthander);
     }
     //加载顶部导航
-    private void initViews() {
+    private void loadingViewPager() {
 
         //使用适配器将ViewPager与Fragment绑定在一起
         ViewPager vp = (ViewPager)findViewById(R.id.ViewPager);

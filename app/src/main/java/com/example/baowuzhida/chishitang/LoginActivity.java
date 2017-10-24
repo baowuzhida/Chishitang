@@ -97,12 +97,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onClick(View v) {
 
-
-
         switch (v.getId()){
             case R.id.login_goto_register:
+
                 Register();
+                break;
+
             case R.id.login_login:
+
                 name = login_input_username.getText().toString();
                 psd = login_input_password.getText().toString();
 
@@ -111,10 +113,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // 隐藏输入框
                 login_input_username.setVisibility(View.INVISIBLE);
                 login_input_password.setVisibility(View.INVISIBLE);
-
                 inputAnimator(mInputLayout, mWidth, mHeight);
 
                 Login(name,psd);
+                break;
 
         }
     }
