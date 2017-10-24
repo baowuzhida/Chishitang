@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1.5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal"
+        android:background="@drawable/background"
+        android:visibility="visible">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personalcenter_roundedmage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/eat"
+            app:riv_border_color="#FFFFFF"
+            app:riv_border_width="1dp"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/personalcenter_iflogin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="3"
+            android:drawableEnd="@mipmap/ic_goright"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="@dimen/text_size_2sp"
+            android:visibility="visible" />
+
+        <!--<include-->
+            <!--android:id="@+id/person_detail_center"-->
+            <!--layout="@layout/person_detail_center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="gone" />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LRLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/personalcenter_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/corner_btn"
+            android:text="@string/register"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/personalcenter_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/corner_btn"
+            android:text="@string/login"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LInfLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/personalcenter_point"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/point" />
+
+        <Button
+            android:id="@+id/personalcenter_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/corner_btn"
+            android:text="@string/logout"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

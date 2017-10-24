@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_width="match_parent" />
+
+    <ImageView
+        android:id="@+id/register_title_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/welcometitle" />
+
+    <LinearLayout
+        android:id="@+id/login_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_general_margin"
+        android:layout_marginStart="@dimen/default_general_margin"
+        android:layout_marginTop="@dimen/default_grow_margin"
+        android:background="@drawable/login_input_rounded_bg"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/register_addname"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_default_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/default_small_padding"
+            android:background="@android:color/transparent"
+            android:drawablePadding="@dimen/default_general_margin"
+            android:drawableStart="@mipmap/ic_user_small"
+            android:hint="@string/register_hint_account"
+            android:maxLines="1"
+            android:textColor="@color/black_80"
+            android:textColorHint="@color/gray_20"
+            android:textSize="@dimen/login_button_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height1"
+            android:background="@color/line_bg" />
+
+        <EditText
+            android:id="@+id/register_addpassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_default_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/default_small_padding"
+            android:background="@android:color/transparent"
+            android:drawablePadding="@dimen/default_general_margin"
+            android:drawableStart="@mipmap/ic_password"
+            android:hint="@string/register_hint_password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@color/black_80"
+            android:textColorHint="@color/gray_20"
+            android:textSize="@dimen/login_button_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height1"
+            android:background="@color/line_bg" />
+
+        <EditText
+            android:id="@+id/register_addemail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_default_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/default_small_padding"
+            android:background="@android:color/transparent"
+            android:drawablePadding="@dimen/default_general_margin"
+            android:drawableStart="@mipmap/ic_email"
+            android:hint="@string/register_hint_email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColor="@color/black_80"
+            android:textColorHint="@color/gray_20"
+            android:textSize="@dimen/login_button_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height1"
+            android:background="@color/line_bg" />
+
+        <EditText
+            android:id="@+id/register_addphone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_default_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/default_small_padding"
+            android:background="@android:color/transparent"
+            android:drawablePadding="@dimen/default_general_margin"
+            android:drawableStart="@mipmap/ic_phone"
+            android:hint="@string/register_hint_phone"
+            android:inputType="phone|number"
+            android:selectAllOnFocus="true"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:textColor="@color/black_80"
+            android:textColorHint="@color/gray_20"
+            android:textSize="@dimen/login_button_text" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_register"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_button_height"
+        android:layout_marginBottom="@dimen/default_general_margin"
+        android:layout_marginLeft="@dimen/default_general_margin"
+        android:layout_marginRight="@dimen/default_general_margin"
+        android:layout_marginTop="@dimen/default_long_margin"
+        android:background="@drawable/corner_btn"
+        android:gravity="center"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="@dimen/login_button_text" />
+
+
+
+</LinearLayout>

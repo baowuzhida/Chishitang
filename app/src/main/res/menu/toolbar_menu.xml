@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/toolbar_search"
+        android:icon="@mipmap/ic_search"
+        android:title="@string/search"
+        android:orderInCategory="0"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/toolbar_menu"
+        android:icon="@mipmap/ic_menu"
+        android:orderInCategory="1"
+        android:title="@string/setting"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <!--<item-->
+        <!--android:id="@+id/toolbar_setting"-->
+        <!--android:icon="@mipmap/ic_menu"-->
+        <!--android:orderInCategory="1"-->
+        <!--android:title="@string/setting"-->
+        <!--app:showAsAction="never" />-->
+</menu>
+
+    <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
