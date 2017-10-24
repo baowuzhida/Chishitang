@@ -1,6 +1,8 @@
 package com.example.baowuzhida.chishitang;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +13,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
@@ -175,9 +178,9 @@ public class MainActivity extends AppCompatActivity {
             @Override public boolean onMenuItemClick(MenuItem item)
             { switch (item.getItemId()) {
                 case R.id.toolbar_menu:
-                    Intent intentcart = new Intent(MainActivity.this, ShoppingCartActivity.class);
-                    startActivity(intentcart);
-                    Toast.makeText(MainActivity.this, "进入购物车", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(MainActivity.this, "进入app信息", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.toolbar_search:
                     Intent intentsearch = new Intent(MainActivity.this, SearchActivity.class);

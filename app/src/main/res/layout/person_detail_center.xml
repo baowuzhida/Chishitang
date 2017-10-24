@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="5">
-
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/LInfLayout"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:background="@drawable/login_input_rounded_bg"
         android:orientation="horizontal"
-        android:visibility="visible"
-        android:layout_weight="1.5">
+        android:visibility="visible">
 
 
         <TextView
@@ -60,10 +59,9 @@
     <LinearLayout
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:background="@drawable/login_input_rounded_bg"
-        android:layout_weight="3.5"
         android:gravity="center">
 
         <TextView

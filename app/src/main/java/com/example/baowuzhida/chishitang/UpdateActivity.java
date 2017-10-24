@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    Button  button;
-    TextView textView1;
-    TextView textView2;
-    TextView textView3;
+    private Button  button;
+    private TextView textView1;
+    private TextView textView2;
+    private TextView textView3;
 
 
     protected void onCreate(Bundle savedInstanceState) {

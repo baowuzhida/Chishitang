@@ -17,7 +17,7 @@
             android:id="@+id/updata_imageView"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            app:srcCompat="@drawable/bigeat" />
+            app:srcCompat="@drawable/eat" />
 
     </LinearLayout>
 
