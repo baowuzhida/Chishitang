@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -84,31 +85,22 @@ public class ProductMainAdapter extends BaseAdapter {
             }
 
             List<String> images = new ArrayList<>();
-            images.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1371525316,1749410338&fm=27&gp=0.jpg");
-            images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509023860925&di=1dde49543c41327bea067f1ee4d6335c&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F77c6a7efce1b9d16f17fd321f5deb48f8c546431.jpg");
+            images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509040205440&di=22193b1c9af83a006eb4b01a707a0ace&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Faa64034f78f0f7366c7c53f70055b319eac41341.jpg");
+            images.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=820816834,1560862863&fm=200&gp=0.jpg");
+            images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509040205441&di=dc9f06e2586dacee5ca5274a19e5e9b9&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fphotoblog%2F1406%2F20%2Fc2%2F35487604_1403249143274.jpg");
             Banner banner = (Banner)convertView.findViewById(R.id.banner_view_pager);
+            banner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    Toast.makeText(mContext, "点击图片 "+position, Toast.LENGTH_SHORT).show();
+                }
+            });
             //设置图片加载器
             banner.setImageLoader(new GlideImageLoader());
             //设置图片集合
             banner.setImages(images);
             //banner设置方法全部调用完毕时最后调用
             banner.start();
-
-
-//            RollPagerView product_pager = (RollPagerView)convertView.findViewById(R.id.roll_view_pager);
-//            //设置播放时间间隔
-//            product_pager.setPlayDelay(2000);
-//            //设置透明度
-//            product_pager.setAnimationDurtion(500);
-//            //设置适配器
-//            product_pager.setAdapter(new RollpagerviewAdapter());
-//            //设置指示器（顺序依次）
-//            //自定义指示器图片
-//            //设置圆点指示器颜色
-//            //设置文字指示器
-//            //隐藏指示器
-//            //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
-//            product_pager.setHintView(new ColorPointHintView(mContext, Color.YELLOW,Color.WHITE));
 
             holder.product_all.setOnClickListener(new View.OnClickListener() {
                 @Override

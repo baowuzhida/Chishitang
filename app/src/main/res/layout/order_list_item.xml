@@ -12,20 +12,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/orderlist_orders_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
             android:layout_gravity="center"
+            android:layout_margin="3dp"
             android:layout_weight="1.3"
             android:text="@string/order_hint_order_id"
             android:textColor="@color/black_80"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp" />
 
         <View
             android:layout_width="@dimen/line_height1"
@@ -36,13 +35,12 @@
             android:id="@+id/orderlist_users_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
             android:layout_gravity="center"
+            android:layout_margin="3dp"
             android:layout_weight="1.3"
             android:text="@string/order_hint_user_id"
             android:textColor="@color/black_80"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp" />
 
         <View
             android:layout_width="@dimen/line_height1"
@@ -53,13 +51,12 @@
             android:id="@+id/orderlist_orders_price"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
             android:layout_gravity="center"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:text="@string/order_hint_order_amount"
             android:textColor="@color/black_80"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -81,19 +78,18 @@
             android:layout_weight="1"
             android:text="@string/order_hint_order_time"
             android:textColor="@color/black_80"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/orderlist_orders_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="2"
             android:background="@drawable/order_btn"
-            android:textColor="@color/white"
-            android:layout_margin="5dp"
             android:elevation="0dp"
-            android:text="@string/order_hint_order_look" />
+            android:text="@string/order_hint_order_look"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <TextView

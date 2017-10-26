@@ -6,7 +6,6 @@
 
     <ImageView
         android:id="@+id/ic_down"
-        android:background="@color/a_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_down" />

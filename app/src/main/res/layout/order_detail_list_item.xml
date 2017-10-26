@@ -12,7 +12,7 @@
 
         <ImageView
             android:id="@+id/product_imageview"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/listview_height"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:background="@android:color/white"
@@ -37,8 +37,7 @@
                     android:layout_weight="1"
                     android:gravity="center|start"
                     android:text="@string/product_hint_product_name"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/product_price"
@@ -47,8 +46,7 @@
                     android:layout_weight="1"
                     android:gravity="center|start"
                     android:text="@string/product_hint_product_price"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -71,8 +69,7 @@
                     android:gravity="center|start"
                     android:layout_weight="1"
                     android:text="@string/shoppingcar_hint_amount"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/product_ourprice"
@@ -81,8 +78,7 @@
                     android:gravity="center|start"
                     android:layout_weight="1"
                     android:text="@string/shoppingcar_hint_total"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -102,8 +98,7 @@
                     android:background="@drawable/corner_btn"
                     android:text="@string/order_hint_order_evaluate"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp"/>
+                    android:textSize="12sp"/>
             </LinearLayout>
 
 
