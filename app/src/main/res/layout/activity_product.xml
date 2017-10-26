@@ -7,19 +7,18 @@
     android:background="@color/white"
     tools:context="layout.fragment.ProductFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/product_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Interpolator_extends.ListViewForScrollView
+        <ListView
             android:id="@+id/product_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

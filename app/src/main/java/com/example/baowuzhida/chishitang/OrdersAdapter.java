@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class OrdersAdapter extends BaseAdapter{
 
     private LinkedList<OrdersBean> mData;
     private Context mContext;
+    private int itemCount = 3;
 
     public OrdersAdapter(LinkedList<OrdersBean> mData, Context mContext) {
         this.mData = mData;
@@ -32,7 +34,21 @@ public class OrdersAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return mData.size();
+        // 这里是关键
+        // 如果数据数量大于3，只显示3条数据。这里数量自己定义。
+        // 否则，显示全部数量。
+        if (mData.size() > 3)
+        {
+            return itemCount;
+        }else
+        {
+            return mData.size();
+        }
+    }
+
+    public void addItemNum(int number)
+    {
+        itemCount = number;
     }
 
     @Override
@@ -96,4 +112,5 @@ public class OrdersAdapter extends BaseAdapter{
         TextView textTime;
         Button textLook;
     }
+
 }

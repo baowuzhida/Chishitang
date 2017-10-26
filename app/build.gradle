@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.baowuzhida.chishitang"
         targetSdkVersion 25
@@ -25,10 +25,15 @@ android {
     lintOptions {
         disable 'MissingTranslation'
     }
-    //自动追加版本号
-    android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = new File(output.outputFile.parent, defaultConfig.applicationId + "-" + buildType.name + "-v" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk" );
+//    //自动追加版本号
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name.replace(".apk", "-${defaultConfig.versionName}.apk")
+                outputFileName = fileName
+            }
         }
     }
 
@@ -39,7 +44,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:gridlayout-v7:25.3.1'
@@ -53,4 +58,6 @@ dependencies {
     //fab悬浮按钮依赖库
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.getbase:floatingactionbutton:1.5.1'
+    //轮播依赖库
+    compile 'com.jude:rollviewpager:1.2.9'
 }

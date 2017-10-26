@@ -29,6 +29,12 @@
         </activity>
 
         <activity
+            android:name=".ProductActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
             android:name=".UpdateActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
@@ -76,6 +82,12 @@
 
         <activity
             android:name=".VoteDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".ProductAllActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
         </activity>

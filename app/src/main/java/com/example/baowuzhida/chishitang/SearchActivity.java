@@ -1,17 +1,13 @@
 package com.example.baowuzhida.chishitang;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -21,10 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import Bean.ProductBean;
 import Link.HttpUtil;
@@ -139,8 +133,8 @@ public class SearchActivity extends Activity {
                         {
                             e.printStackTrace();
                         }
-                        ProductAdapter productAdapter=new ProductAdapter((LinkedList<ProductBean>)linkedList,SearchActivity.this);
-                        mListView.setAdapter(productAdapter);
+                        ProductMainAdapter productMainAdapter =new ProductMainAdapter((LinkedList<ProductBean>)linkedList,SearchActivity.this);
+                        mListView.setAdapter(productMainAdapter);
                     }
                 };
                 HttpUtil httpUtil=new HttpUtil();

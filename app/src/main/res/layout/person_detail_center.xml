@@ -74,6 +74,11 @@
             android:layout_weight="1"
             android:text="@string/user_hint_myfavorite" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height1"
+            android:background="@color/line_bg" />
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
@@ -84,6 +89,11 @@
             android:layout_weight="1"
             android:text="@string/user_hint_myevaluate" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height1"
+            android:background="@color/line_bg" />
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
@@ -93,6 +103,11 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="我的客服" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height1"
+            android:background="@color/line_bg" />
 
         <TextView
             android:id="@+id/textView2"

@@ -1,6 +1,5 @@
 package com.example.baowuzhida.chishitang;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -34,7 +32,7 @@ public class ProductdetailActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_productdetail);
+        setContentView(R.layout.activity_product_detail);
 
         productid = getIntent().getIntExtra("product_id",-1);
         url = getIntent().getStringExtra("product_image");

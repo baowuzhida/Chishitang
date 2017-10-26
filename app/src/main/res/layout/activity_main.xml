@@ -9,7 +9,6 @@
     tools:context="com.example.baowuzhida.chishitang.MainActivity"
     android:weightSum="1">
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/Toolbar"
         android:layout_height="?attr/actionBarSize"
@@ -26,7 +25,7 @@
 
         <include
             android:id="@+id/main_products"
-            layout="@layout/activity_products"
+            layout="@layout/activity_product"
             android:visibility="visible" />
 
         <include
@@ -54,6 +53,8 @@
             app:menu_backgroundColor="#ccffffff"
             app:menu_colorNormal="@color/colorPrimaryDark"
             app:menu_colorPressed="@color/colorPrimary"
+            app:menu_icon="@mipmap/ic_shoppingcar"
+            app:menu_fab_size="mini"
             app:menu_labels_ellipsize="end"
             app:menu_labels_singleLine="true">
 
@@ -81,7 +82,6 @@
         </com.github.clans.fab.FloatingActionMenu>
 
     </FrameLayout>
-
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

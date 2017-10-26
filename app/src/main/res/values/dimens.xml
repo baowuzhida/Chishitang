@@ -19,7 +19,7 @@
     <dimen name="default_small_padding">8dp</dimen>
     <!---->
     <!--ListView-->
-    <dimen name="listview_height">150dp</dimen>
+    <dimen name="listview_height">130dp</dimen>
 
 
     <dimen name="text_size_1sp">10sp</dimen>

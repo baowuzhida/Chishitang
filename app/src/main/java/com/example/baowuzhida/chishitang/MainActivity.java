@@ -1,8 +1,6 @@
 package com.example.baowuzhida.chishitang;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,12 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.ScrollerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -30,73 +23,72 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Bean.ProductBean;
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.jude.rollviewpager.RollPagerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 import Bean.OrdersBean;
 import Link.HttpUtil;
 import Link.SharedPrefsCookieUtil;
-import layout.fragment.ProductFragment;
-import layout.fragment.Product2Fragment;
-import layout.fragment.Product3Fragment;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private ListView product_listview;
+    private RollPagerView product_pager;
     private ViewPager viewPager;
     private ImageView RoundedImage;
-    //    private LinearLayout LRLayout;
-//    private LinearLayout LInfLayout;
-    private View orderView,personalcenterView,specialView;
+    private View orderView,personalcenterView,specialView,productView;
     private TextView IfLogin,show_login,Point;
     private ScrollView scr_personal_center;
-    private SwipeRefreshLayout orderswipe;
+    private SwipeRefreshLayout orderswipe,productswipe;
     private ListView order_listview;
-    private Button btn_login,btn_register,btn_logout;
+    private Button btn_logout;
     private Toolbar toolbar;
     private FloatingActionButton fbbtn_shoppingcar,fbbtn_question;
     private HttpUtil httpUtil;
     private FloatingActionMenu fab;
 
 
-    private TabLayout.Tab one,two,three;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            viewPager = (ViewPager)findViewById(R.id.ViewPager);
+//            viewPager = (ViewPager)findViewById(R.id.ViewPager);
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 //                    viewPager.setCurrentItem(0);
+                    controlProduct();
                     fab.setVisibility(View.VISIBLE);
+                    productView.setVisibility(View.VISIBLE);
                     personalcenterView.setVisibility(View.GONE);
                     orderView.setVisibility(View.GONE);
                     specialView.setVisibility(View.GONE);
-                    viewPager.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
                     contralOrder();
                     fab.setVisibility(View.GONE);
                     personalcenterView.setVisibility(View.GONE);
-                    viewPager.setVisibility(View.GONE);
+                    productView.setVisibility(View.GONE);
                     specialView.setVisibility(View.GONE);
                     orderView.setVisibility(View.VISIBLE);
                     return true;
@@ -104,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     contralSpecial();
                     fab.setVisibility(View.GONE);
                     orderView.setVisibility(View.GONE);
-                    viewPager.setVisibility(View.GONE);
+                    productView.setVisibility(View.GONE);
                     personalcenterView.setVisibility(View.GONE);
                     specialView.setVisibility(View.VISIBLE);
                     return true;
@@ -112,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     contralPersonalcenter();
                     fab.setVisibility(View.GONE);
                     orderView.setVisibility(View.GONE);
-                    viewPager.setVisibility(View.GONE);
+                    productView.setVisibility(View.GONE);
                     specialView.setVisibility(View.GONE);
                     personalcenterView.setVisibility(View.VISIBLE);
                     return true;
@@ -130,16 +122,17 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar)findViewById(R.id.Toolbar);
         orderView=findViewById(R.id.main_order);
+        productView=findViewById(R.id.main_products);
         personalcenterView=findViewById(R.id.main_personalcenter);
         specialView=findViewById(R.id.main_special);
         show_login = (TextView)findViewById(R.id.order_show_login);
         orderswipe = (SwipeRefreshLayout)findViewById(R.id.order_swipe);
+        productswipe = (SwipeRefreshLayout)findViewById(R.id.product_swipe);
 
         contralToolbar();
-        loadingViewPager();
-//        LoadingTitle();
         relogin();//判断本地是否登录 如果登陆向服务端发送一次请求
         contralFab();
+        productRefresh(productswipe);
         //
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -157,6 +150,17 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentcart = new Intent(MainActivity.this, ShoppingCartActivity.class);
                 startActivity(intentcart);
                 Toast.makeText(MainActivity.this, "进入购物车", Toast.LENGTH_SHORT).show();
+            }
+        });
+        fbbtn_question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new  AlertDialog.Builder(MainActivity.this)
+                        .setTitle("打开小助手" )
+                        .setMessage("确定吗？" )
+                        .setPositiveButton("是" ,  null )
+                        .setNegativeButton("否" , null)
+                        .show();
             }
         });
     }
@@ -191,10 +195,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    //产品首页信息
+    public void controlProduct(){
+        productRefresh(productswipe);
+        productswipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                productRefresh(productswipe);
+            }
+        });
+    }
     //个人中心信息
     public void contralPersonalcenter(){
-        scr_personal_center =(ScrollView)findViewById(R.id.person_detail_center_scroll);
 
+        scr_personal_center =(ScrollView)findViewById(R.id.person_detail_center_scroll);
         RoundedImage = (ImageView)findViewById(R.id.personalcenter_roundedmage);
         IfLogin = (TextView)findViewById(R.id.personalcenter_iflogin);
         Point = (TextView)findViewById(R.id.personalcenter_point);
@@ -402,33 +416,15 @@ public class MainActivity extends AppCompatActivity {
         HttpUtil httpUtil = new HttpUtil();
         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","type=logout",logouthander);
     }
-    //加载顶部导航
-    private void loadingViewPager() {
 
-        //使用适配器将ViewPager与Fragment绑定在一起
-        ViewPager vp = (ViewPager)findViewById(R.id.ViewPager);
-        List<Fragment> fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(new ProductFragment());
-        fragmentList.add(new Product2Fragment());
-        fragmentList.add(new Product3Fragment());
-        List<String> mTitles = new ArrayList<>();
-        mTitles.add("菜品详情");
-        mTitles.add("特色菜品");
-        mTitles.add("当季推荐");
-        vp.setAdapter(new myPagerAdapter(getSupportFragmentManager(), fragmentList, mTitles));
-
-        //将TabLayout与ViewPager绑定在一起
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        mTabLayout.setupWithViewPager(vp);
-
-        //指定Tab的位置
-        one = mTabLayout.getTabAt(0);
-        two = mTabLayout.getTabAt(1);
-        three = mTabLayout.getTabAt(2);
-
-    }
-    //刷新订单
+    //刷新订单基于contralOrder
     private void orderRefresh(final SwipeRefreshLayout orderswipe){
+        final ImageView ic_down;
+        final View footView;
+
+        footView = getLayoutInflater().inflate(R.layout.item_view_foot, null);
+        ic_down = (ImageView) footView.findViewById(R.id.ic_down);
+
         SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
         final String username=sharedPre.getString("username", "");
         if(username.equals("")){
@@ -445,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                LinkedList<OrdersBean> linkedList=new LinkedList<>();
+                final LinkedList<OrdersBean> linkedList=new LinkedList<>();
                 JSONArray jsonArray;
                 try {
                     jsonArray = new JSONArray((String) msg.obj);
@@ -463,13 +459,81 @@ public class MainActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-                OrdersAdapter ordersAdapter=new OrdersAdapter(linkedList,MainActivity.this);
+                Collections.reverse(linkedList);//订单倒序使得最新下单最先展示
+
+                final OrdersAdapter ordersAdapter=new OrdersAdapter(linkedList,MainActivity.this);
+
+                if(order_listview.getFooterViewsCount() > 0) {
+                    order_listview.removeFooterView(footView);
+                }else if(order_listview.getFooterViewsCount() == 0) {
+                    order_listview.addFooterView(footView);
+                    ordersAdapter.notifyDataSetChanged();
+                }
+
+
                 order_listview.setAdapter(ordersAdapter);
                 orderswipe.setRefreshing(false);
+
+                ic_down.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // 判断getCount()数据的数量，如果等于3点击后就设置getCount()为全部数量，设置修改标识，刷新。
+                        // 否则，相反。
+                        if (ordersAdapter.getCount() == 3) {
+                            ordersAdapter.addItemNum(linkedList.size());
+                            order_listview.removeFooterView(footView);
+                            ordersAdapter.notifyDataSetChanged();
+                        } else {
+                            ordersAdapter.addItemNum(3);
+                            ic_down.setImageDrawable(getResources().getDrawable(
+                                    R.mipmap.ic_down));
+                            ordersAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
             }
         };
         HttpUtil httpUtil = new HttpUtil();
         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/OrdersServlet","type=list",orderlisthandler);
+    }
+    //刷新产品基于controlProduct
+    private void productRefresh(final SwipeRefreshLayout productswipe){
+
+        product_listview = (ListView)findViewById(R.id.product_listview);
+        Handler productlisthandler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                LinkedList linkedList=new LinkedList();
+                JSONArray jsonArray;
+                try {
+                    jsonArray = new JSONArray((String) msg.obj);
+                    for(int i = 0;i < jsonArray.length();i++) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        ProductBean productBean=new ProductBean();
+                        productBean.setProduct_id(jsonObject.getInt("product_id"));
+                        productBean.setProduct_name(jsonObject.getString("product_name"));
+                        productBean.setProduct_details(jsonObject.getString("product_details"));
+                        productBean.setProduct_address(jsonObject.getString("product_address"));
+                        productBean.setProduct_image(jsonObject.getString("product_image"));
+                        productBean.setProduct_type(jsonObject.getInt("product_type"));
+                        productBean.setProduct_price(jsonObject.getDouble("product_price"));
+                        linkedList.add(productBean);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                ProductMainAdapter ordersAdapter=new ProductMainAdapter((LinkedList<ProductBean>)linkedList,MainActivity.this);
+                product_listview.setAdapter(ordersAdapter);
+                productswipe.setRefreshing(false);
+
+            }
+        };
+        HttpUtil httpUtil = new HttpUtil();
+        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/ProductServlet","type=list"+"&address=1",productlisthandler);
     }
     //特色菜单栏点击监听
     private class ItemClickListener implements AdapterView.OnItemClickListener {
@@ -498,5 +562,25 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "点击"+item.get("ItemText"), Toast.LENGTH_SHORT).show();
         }
     }
+    //首页轮播
+//    public void rollpagerview(){
+//        product_pager = (RollPagerView) findViewById(R.id.roll_view_pager);
+//        //设置播放时间间隔
+//        product_pager.setPlayDelay(2000);
+//        //设置透明度
+//        product_pager.setAnimationDurtion(500);
+//        //设置适配器
+//        product_pager.setAdapter(new RollpagerviewAdapter());
+//
+//        //设置指示器（顺序依次）
+//        //自定义指示器图片
+//        //设置圆点指示器颜色
+//        //设置文字指示器
+//        //隐藏指示器
+//        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
+//        product_pager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+//        //mRollViewPager.setHintView(new TextHintView(this));
+//        //mRollViewPager.setHintView(null);
+//    }
 }
 
