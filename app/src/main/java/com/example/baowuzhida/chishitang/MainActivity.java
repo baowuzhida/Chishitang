@@ -72,11 +72,8 @@ public class MainActivity extends AppCompatActivity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            viewPager = (ViewPager)findViewById(R.id.ViewPager);
-
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    viewPager.setCurrentItem(0);
                     controlProduct();
                     fab.setVisibility(View.VISIBLE);
                     productView.setVisibility(View.VISIBLE);

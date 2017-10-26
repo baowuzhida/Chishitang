@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -35,7 +36,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|start"
-                    android:text="@string/product_hint_product_name" />
+                    android:text="@string/product_hint_product_name"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"/>
 
                 <TextView
                     android:id="@+id/product_price"
@@ -43,7 +46,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|start"
-                    android:text="@string/product_hint_product_price" />
+                    android:text="@string/product_hint_product_price"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"/>
 
             </LinearLayout>
 
@@ -65,7 +70,9 @@
                     android:layout_height="match_parent"
                     android:gravity="center|start"
                     android:layout_weight="1"
-                    android:text="@string/shoppingcar_hint_amount" />
+                    android:text="@string/shoppingcar_hint_amount"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"/>
 
                 <TextView
                     android:id="@+id/product_ourprice"
@@ -73,25 +80,30 @@
                     android:layout_height="match_parent"
                     android:gravity="center|start"
                     android:layout_weight="1"
-                    android:text="@string/shoppingcar_hint_total" />
+                    android:text="@string/shoppingcar_hint_total"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="0.1">
 
                 <Button
                     android:id="@+id/order_hint_order_evaluate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="50dp"
                     android:layout_marginStart="50dp"
                     android:background="@drawable/corner_btn"
                     android:text="@string/order_hint_order_evaluate"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"/>
             </LinearLayout>
 
 

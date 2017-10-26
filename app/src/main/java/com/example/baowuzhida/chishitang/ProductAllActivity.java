@@ -1,11 +1,17 @@
 package com.example.baowuzhida.chishitang;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +28,8 @@ public class ProductAllActivity extends AppCompatActivity {
 
     private TabLayout.Tab one,two,three;
     private ViewPager vp;
+    private FloatingActionMenu fab;
+    private FloatingActionButton fbbtn_shoppingcar,fbbtn_question;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +54,7 @@ public class ProductAllActivity extends AppCompatActivity {
         List<String> mTitles = new ArrayList<>();
         mTitles.add("所有美食");
         mTitles.add("特色菜品");
-        mTitles.add("当季推荐");
+        mTitles.add("众筹菜品");
         vp.setAdapter(new myPagerAdapter(getSupportFragmentManager(), fragmentList, mTitles));
 
         //将TabLayout与ViewPager绑定在一起
@@ -58,5 +66,32 @@ public class ProductAllActivity extends AppCompatActivity {
         two = mTabLayout.getTabAt(1);
         three = mTabLayout.getTabAt(2);
 
+    }
+
+    public void contralFab(){
+        fab = (FloatingActionMenu) findViewById(R.id.fab);
+        fab.setClosedOnTouchOutside(true);
+
+        fbbtn_shoppingcar= (FloatingActionButton)findViewById(R.id.fab_shoppingcar);
+        fbbtn_question= (FloatingActionButton)findViewById(R.id.fab_question);
+        fbbtn_shoppingcar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentcart = new Intent(ProductAllActivity.this, ShoppingCartActivity.class);
+                startActivity(intentcart);
+                Toast.makeText(ProductAllActivity.this, "进入购物车", Toast.LENGTH_SHORT).show();
+            }
+        });
+        fbbtn_question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new  AlertDialog.Builder(ProductAllActivity.this)
+                        .setTitle("打开小助手" )
+                        .setMessage("确定吗？" )
+                        .setPositiveButton("是" ,  null )
+                        .setNegativeButton("否" , null)
+                        .show();
+            }
+        });
     }
 }

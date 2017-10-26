@@ -1,22 +1,15 @@
 package com.example.baowuzhida.chishitang;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.BounceInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +19,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.LinkedList;
 
 import Bean.OrdersDetailsBean;
@@ -71,7 +63,7 @@ public class OrderDetailAdapter extends BaseAdapter {
         if(convertView == null)
         {
             //根据自定义的Item布局加载布局
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.order_detail_list,parent,false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.order_detail_list_item,parent,false);
             holder = new ViewHolder();
             holder.product_name=(TextView)convertView.findViewById(R.id.product_name);
             holder.product_price=(TextView)convertView.findViewById(R.id.product_price);

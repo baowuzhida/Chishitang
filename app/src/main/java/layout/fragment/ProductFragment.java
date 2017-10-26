@@ -7,8 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
-import Interpolator_extends.ListViewForScrollView;
 import com.example.baowuzhida.chishitang.ProductAllAdapter;
 import com.example.baowuzhida.chishitang.R;
 
@@ -24,7 +25,7 @@ import Link.HttpUtil;
 public class ProductFragment extends android.support.v4.app.Fragment {
 
     private View view;
-    private ListViewForScrollView product_listview;
+    private ListView product_listview;
     private HttpUtil httpUtil = new HttpUtil();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +53,7 @@ public class ProductFragment extends android.support.v4.app.Fragment {
 
     public void productlist(){
 
-        product_listview = (ListViewForScrollView)view.findViewById(R.id.product_listview);
+        product_listview = (ListView)view.findViewById(R.id.product_listview);
         Handler productlisthandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {

@@ -18,22 +18,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/all_product"
+                android:id="@+id/product_all"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
+                android:drawableTop="@mipmap/im_food_pudding"
                 android:background="@color/button"
                 android:gravity="center"
-                android:text="所有美食"
+                android:text="@string/product_all"
                 android:layout_weight="1"/>
 
             <TextView
+                android:id="@+id/product_special"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
+                android:drawableTop="@mipmap/im_food_tea"
                 android:background="@color/b_red"
                 android:gravity="center"
-                android:text="所有美食"
+                android:text="@string/product_special"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -44,31 +47,43 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/product_vote"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
+                android:drawableTop="@mipmap/im_food_redwine"
                 android:background="@color/a_blue"
                 android:gravity="center"
-                android:text="所有美食"
+                android:text="@string/product_vote"
                 android:layout_weight="1"/>
 
             <TextView
+                android:id="@+id/product_fruit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
+                android:drawableTop="@mipmap/im_food_coffee"
                 android:background="@color/SpringGreen"
                 android:gravity="center"
-                android:text="所有美食"
+                android:text="@string/product_fruit"
                 android:layout_weight="1"/>
 
         </LinearLayout>
 
-        <com.jude.rollviewpager.RollPagerView
-            android:id="@+id/roll_view_pager"
+        <com.youth.banner.Banner
+            android:id="@+id/banner_view_pager"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_height="150dp"
-            app:rollviewpager_play_delay="3000"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+        </com.youth.banner.Banner>
+        <!--<com.jude.rollviewpager.RollPagerView-->
+            <!--android:id="@+id/roll_view_pager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_height="150dp"-->
+            <!--app:rollviewpager_play_delay="3000"/>-->
     </LinearLayout>
 
 </LinearLayout>
