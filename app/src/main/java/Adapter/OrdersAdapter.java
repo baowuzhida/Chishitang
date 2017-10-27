@@ -1,4 +1,4 @@
-package com.example.baowuzhida.chishitang;
+package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.baowuzhida.chishitang.OrderDetailActivity;
+import com.example.baowuzhida.chishitang.R;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;

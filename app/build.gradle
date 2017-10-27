@@ -62,4 +62,9 @@ dependencies {
     //轮播依赖库
     compile 'com.jude:rollviewpager:1.2.9'
     compile 'com.youth.banner:banner:1.4.9'
+    //欢迎页依赖库
+    compile 'com.zqg:library:1.0.2'
+//    compile 'com.github.Vexigon:Material-Onboarding:v1.1.1'
+
+
 }

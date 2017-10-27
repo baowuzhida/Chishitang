@@ -29,11 +29,14 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Adapter.OrdersAdapter;
 import Bean.ProductBean;
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.jude.rollviewpager.RollPagerView;
+import com.zqg.dialogviewpager.StepDialog;
+//import com.zqg.dialogviewpager.StepDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -113,6 +116,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences pref = this.getSharedPreferences("ifFirstUse" , MODE_PRIVATE);
+        if(pref.getString("iffirstuse",null) == null){
+            //id为空，用户是首次使用应用
+            StepDialog.getInstance()
+                    .setImages(new int[]{R.drawable.welcome, R.drawable.background, R.drawable.background_blue, R.drawable.update})
+                    .show(getFragmentManager());
+            SharedPreferences.Editor mEditor = pref.edit();
+            mEditor.putString("iffirstuse", "used");
+            //存入id
+            mEditor.apply();
+        }
+
 
         SharedPrefsCookieUtil scookie=new SharedPrefsCookieUtil(this);
         httpUtil = new HttpUtil(scookie);

@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/welcome">
 
+    <!--<activity android:name="com.example.example.intro"-->
+    <!--android:label="@string/app_intro" />-->
+
     <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->

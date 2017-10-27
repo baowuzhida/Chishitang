@@ -31,8 +31,8 @@ public class WelcomeActivity extends Activity {
         final View view = View.inflate(this, R.layout.activity_welcome, null);
         setContentView(view);
 
-        AlphaAnimation aa = new AlphaAnimation(0.1f,1.0f);
-        aa.setDuration(1300);
+        AlphaAnimation aa = new AlphaAnimation(1.0f,0f);
+        aa.setDuration(1000);
         view.startAnimation(aa);
         aa.setAnimationListener(new Animation.AnimationListener()
         {

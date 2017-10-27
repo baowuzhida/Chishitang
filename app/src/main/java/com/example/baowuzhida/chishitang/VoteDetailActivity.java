@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
-import Bean.FavoriteProduct;
+import Adapter.EvaluateAdapter;
 import Bean.UserBean;
 import Bean.UserEvaluateBean;
 import Link.HttpUtil;
