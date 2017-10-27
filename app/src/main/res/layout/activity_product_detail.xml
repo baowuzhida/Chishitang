@@ -1,66 +1,137 @@
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@android:color/background_light"
+    android:fitsSystemWindows="true"
+    >
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/main.appbar"
         android:layout_width="match_parent"
-        android:layout_height="533dp"
+        android:layout_height="300dp"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/collapsing"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <ImageView
                 android:id="@+id/product_detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="415dp"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
-                android:scaleType="fitXY"
-                app:layout_collapseMode="parallax"
-                app:srcCompat="@drawable/eat" />
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/eat"
+                app:layout_collapseMode="parallax" />
 
-
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/product_detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/productdetail_scrolling" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/show_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/view_selected_dw"
+            android:text="@string/show_details"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/show_evaluates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/view_selected_dw"
+            android:text="@string/show_evaluates"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/product_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="25sp"
+                    android:textColor="@color/b_red"
+                    android:gravity="center"
+                    android:text="123"/>
+
+                <TextView
+                    android:id="@+id/product_detail_price_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textColor="@color/gray_20"
+                    android:text="123"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/evaluates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+</LinearLayout>
+
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/product_detail_fab_add"
+        android:id="@+id/fab_shoppingcar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="18dp"
-        app:backgroundTint="@color/lightcyan"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/product_detail_fab_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="18dp"
-        app:backgroundTint="@color/lightcyan"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|start"
-        app:srcCompat="@mipmap/ic_back" />
+        android:layout_gravity="end|bottom"
+        android:layout_margin="15dp"
+        android:src="@mipmap/ic_shoppingcar"/>
 
 </android.support.design.widget.CoordinatorLayout>

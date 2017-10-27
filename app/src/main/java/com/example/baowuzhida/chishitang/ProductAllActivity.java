@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapter.myPagerAdapter;
 import layout.fragment.Product2Fragment;
 import layout.fragment.Product3Fragment;
 import layout.fragment.ProductFragment;
@@ -26,6 +28,7 @@ import layout.fragment.ProductFragment;
 
 public class ProductAllActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     private TabLayout.Tab one,two,three;
     private ViewPager vp;
     private FloatingActionMenu fab;
@@ -34,6 +37,16 @@ public class ProductAllActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_all);
+
+        toolbar = (Toolbar)findViewById(R.id.product_all_toolbar);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         vp = (ViewPager)findViewById(R.id.product_all_pager);
         Intent intent = getIntent();

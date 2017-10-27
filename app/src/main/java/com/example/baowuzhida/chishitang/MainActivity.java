@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import Adapter.OrdersAdapter;
+import Adapter.ProductMainAdapter;
 import Bean.ProductBean;
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
@@ -429,7 +430,6 @@ public class MainActivity extends AppCompatActivity {
         HttpUtil httpUtil = new HttpUtil();
         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","type=logout",logouthander);
     }
-
     //刷新订单基于contralOrder
     private void orderRefresh(final SwipeRefreshLayout orderswipe){
         final ImageView ic_down;

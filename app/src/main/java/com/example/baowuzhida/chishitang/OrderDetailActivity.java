@@ -1,8 +1,6 @@
 package com.example.baowuzhida.chishitang;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,9 +13,9 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.Collections;
 import java.util.LinkedList;
 
+import Adapter.OrderDetailAdapter;
 import Bean.OrdersDetailsBean;
 import Bean.ProductBean;
 import Link.HttpUtil;

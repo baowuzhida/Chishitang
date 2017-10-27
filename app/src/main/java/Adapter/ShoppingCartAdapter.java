@@ -1,4 +1,4 @@
-package com.example.baowuzhida.chishitang;
+package Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,6 +22,8 @@ import java.util.List;
 
 import Bean.ShoppingCartBean;
 import Link.CartDao;
+
+import com.example.baowuzhida.chishitang.R;
 import com.example.baowuzhida.chishitang.ShoppingCartActivity;
 
 

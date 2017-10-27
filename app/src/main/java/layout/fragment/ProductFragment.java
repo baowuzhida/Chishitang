@@ -8,9 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
-import com.example.baowuzhida.chishitang.ProductAllAdapter;
+import Adapter.ProductAllAdapter;
 import com.example.baowuzhida.chishitang.R;
 
 import org.json.JSONArray;

@@ -39,7 +39,7 @@
                 android:background="@drawable/btn_chocolate_wide"
                 android:text="@string/back"
                 android:textColor="@color/Chocolate"
-                android:textSize="18sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:background="@drawable/btn_chocolate_wide"
                 android:text="@string/save"
                 android:textColor="@color/Chocolate"
-                android:textSize="18sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 

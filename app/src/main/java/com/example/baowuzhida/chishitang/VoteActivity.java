@@ -1,7 +1,6 @@
 package com.example.baowuzhida.chishitang;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +19,10 @@ import org.json.JSONObject;
 
 import java.util.LinkedList;
 
+import Adapter.VoteAdapter;
 import Bean.FavoriteProduct;
 import Bean.ProductBean;
 import Link.HttpUtil;
-
-import static com.example.baowuzhida.chishitang.R.id.toolbar;
 
 /**
  * Created by Baowuzhida on 2017/8/13.

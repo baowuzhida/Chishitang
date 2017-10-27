@@ -1,4 +1,4 @@
-package com.example.baowuzhida.chishitang;
+package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.baowuzhida.chishitang.R;
+import com.example.baowuzhida.chishitang.VoteActivity;
+import com.example.baowuzhida.chishitang.VoteDetailActivity;
 
 import java.util.LinkedList;
 
