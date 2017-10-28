@@ -30,16 +30,20 @@ import Link.HttpUtil;
 
 public class VoteDetailActivity extends AppCompatActivity {
 
-    private int favourite_product_id;
-    private int vote_number;
-    private String vote_url;
-    private String vote_details;
-    private String vote_name;
+    private int favourite_product_id,vote_number;
+    private String vote_url,vote_details,vote_name;
     private Toolbar toolbar;
+
+    private ImageView vote_details_image;
+    private TextView vote_details_name,vote_details_details,vote_details_votes;
+    private Button vote_details_add;
+    private ListView vote_evaluate_list;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_details);
+
+        initView();
 
         toolbar = (Toolbar)findViewById(R.id.vote_details_toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_back);
@@ -51,19 +55,6 @@ public class VoteDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        favourite_product_id = getIntent().getIntExtra("favourite_product_id",-1);
-        vote_number = getIntent().getIntExtra("vote_number",-1);
-        vote_url = getIntent().getStringExtra("vote_image");
-        vote_details = getIntent().getStringExtra("vote_details");
-        vote_name = getIntent().getStringExtra("vote_name");
-
-        ImageView vote_details_image=(ImageView)findViewById(R.id.vote_details_image);
-        TextView vote_details_name=(TextView)findViewById(R.id.vote_details_name);
-        final TextView vote_details_votes=(TextView)findViewById(R.id.vote_details_votes);
-        TextView vote_details_details=(TextView)findViewById(R.id.vote_details_details);
-        Button vote_details_add=(Button)findViewById(R.id.vote_details_add);
-        final ListView listView=(ListView)findViewById(R.id.vote_evaluate_list);
 
         vote_details_name.setText("商品名称："+vote_name);
         vote_details_votes.setText("票数："+vote_number);
@@ -108,7 +99,7 @@ public class VoteDetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 EvaluateAdapter evaluateAdapter=new EvaluateAdapter(linkedList,VoteDetailActivity.this);
-                listView.setAdapter(evaluateAdapter);
+                vote_evaluate_list.setAdapter(evaluateAdapter);
             }
         };
 
@@ -136,6 +127,24 @@ public class VoteDetailActivity extends AppCompatActivity {
                 httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/FavoriteProductServlet","type=add&id="+favourite_product_id,vote_details_handler);
             }
         });
+    }
+
+    private void initView(){
+
+        favourite_product_id = getIntent().getIntExtra("favourite_product_id",-1);
+        vote_number = getIntent().getIntExtra("vote_number",-1);
+        vote_url = getIntent().getStringExtra("vote_image");
+        vote_details = getIntent().getStringExtra("vote_details");
+        vote_name = getIntent().getStringExtra("vote_name");
+
+
+
+        vote_details_image=(ImageView)findViewById(R.id.vote_details_image);
+        vote_details_name=(TextView)findViewById(R.id.vote_details_name);
+        vote_details_votes=(TextView)findViewById(R.id.vote_details_votes);
+        vote_details_details=(TextView)findViewById(R.id.vote_details_details);
+        vote_details_add=(Button)findViewById(R.id.vote_details_add);
+        vote_evaluate_list=(ListView)findViewById(R.id.vote_evaluate_list);
     }
 
     protected void onPause(){

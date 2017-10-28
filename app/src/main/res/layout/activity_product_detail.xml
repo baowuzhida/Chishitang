@@ -45,85 +45,118 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:orientation="vertical">
-
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/show_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center"
-            android:background="@drawable/view_selected_dw"
-            android:text="@string/show_details"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/show_evaluates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center"
-            android:background="@drawable/view_selected_dw"
-            android:text="@string/show_evaluates"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <FrameLayout
+        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+
 
         <LinearLayout
-            android:id="@+id/details"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/show_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@drawable/btn_chocolate_wide"
+                android:text="@string/show_details"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/show_evaluates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@drawable/btn_chocolate_wide"
+                android:text="@string/show_evaluates"
+                android:layout_weight="1"/>
 
-                <TextView
-                    android:id="@+id/product_detail_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="25sp"
-                    android:textColor="@color/b_red"
-                    android:gravity="center"
-                    android:text="123"/>
-
-                <TextView
-                    android:id="@+id/product_detail_price_before"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:textColor="@color/gray_20"
-                    android:text="123"/>
-            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/evaluates"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            >
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/product_detail_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="123"
+                        android:textColor="@color/b_red"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/product_detail_price_before"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="123"
+                        android:textColor="@color/gray_20" />
+
+                    <Button
+                        android:id="@+id/add_into_shoppingcar"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_product_detail_add"
+                        android:text="@string/product_hint_addto_cart"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/product_detail_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/evaluates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <ListView
+                    android:id="@+id/prouct_evaluate_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
 
 
-    </FrameLayout>
-</LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -131,7 +164,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
         android:src="@mipmap/ic_shoppingcar"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

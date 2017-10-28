@@ -59,7 +59,7 @@
     <string name="product_hint_product_name">菜品名称：</string>
     <string name="product_hint_product_price">菜品价格：</string>
     <string name="product_hint_product_details">菜品详情：</string>
-    <string name="product_hint_addto_cart">加入购物车：</string>
+    <string name="product_hint_addto_cart">加入购物车</string>
     <!--购物车-->
     <string name="shoppingcar_hint_amount">总数： </string>
     <string name="shoppingcar_hint_settlement">结算(0)</string>
