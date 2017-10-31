@@ -42,41 +42,6 @@
             android:visibility="visible" />
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/LRLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="5"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:visibility="visible"-->
-        <!--android:weightSum="1">-->
-
-        <!--<Button-->
-            <!--android:id="@+id/personalcenter_register"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--android:layout_marginTop="30dp"-->
-            <!--android:layout_weight="0.5"-->
-            <!--android:background="@drawable/corner_btn"-->
-            <!--android:text="@string/register"-->
-            <!--android:textColor="@color/white" />-->
-
-        <!--<Button-->
-            <!--android:id="@+id/personalcenter_login"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--android:layout_marginTop="30dp"-->
-            <!--android:layout_weight="0.5"-->
-            <!--android:background="@drawable/corner_btn"-->
-            <!--android:text="@string/login"-->
-            <!--android:textColor="@color/white" />-->
-    <!--</LinearLayout>-->
-
-
     <ScrollView
         android:id="@+id/person_detail_center_scroll"
         android:layout_width="match_parent"
@@ -86,7 +51,7 @@
 
         <include
             android:id="@+id/person_detail_center"
-            layout="@layout/person_detail_center"
+            layout="@layout/person_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

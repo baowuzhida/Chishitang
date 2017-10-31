@@ -55,8 +55,6 @@ import Link.SharedPrefsCookieUtil;
 public class MainActivity extends AppCompatActivity {
 
     private ListView product_listview;
-    private RollPagerView product_pager;
-    private ViewPager viewPager;
     private ImageView RoundedImage;
     private View orderView,personalcenterView,specialView,productView;
     private TextView IfLogin,show_login,Point;
@@ -172,7 +170,13 @@ public class MainActivity extends AppCompatActivity {
                 new  AlertDialog.Builder(MainActivity.this)
                         .setTitle("打开小助手" )
                         .setMessage("确定吗？" )
-                        .setPositiveButton("是" ,  null )
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(MainActivity.this,HelperActivity.class);
+                                startActivity(intent);
+                            }
+                        })
                         .setNegativeButton("否" , null)
                         .show();
             }
@@ -227,12 +231,8 @@ public class MainActivity extends AppCompatActivity {
         IfLogin = (TextView)findViewById(R.id.personalcenter_iflogin);
         Point = (TextView)findViewById(R.id.personalcenter_point);
 
-//        btn_login=(Button)findViewById(R.id.personalcenter_login);
-//        btn_register=(Button)findViewById(R.id.personalcenter_register);
         btn_logout=(Button)findViewById(R.id.personalcenter_logout);
 
-//        LRLayout=(LinearLayout)findViewById(R.id.LRLayout);
-//        LInfLayout=(LinearLayout)findViewById(R.id.LInfLayout);
 
         SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
         String username=sharedPre.getString("username", "");
@@ -240,9 +240,6 @@ public class MainActivity extends AppCompatActivity {
         if(username.equals("")){
             IfLogin.setText("未登录");
             btn_logout.setVisibility(View.GONE);
-//            scr_personal_center.setVisibility(View.GONE);
-//            LRLayout.setVisibility(View.VISIBLE);
-//            LInfLayout.setVisibility(View.GONE);
         }
         else {
             IfLogin.setText(" 欢迎用户 "+username+" 登录");
@@ -253,9 +250,6 @@ public class MainActivity extends AppCompatActivity {
                     .crossFade()
                     .into(RoundedImage);
             btn_logout.setVisibility(View.VISIBLE);
-//            LRLayout.setVisibility(View.GONE);
-//            LInfLayout.setVisibility(View.VISIBLE);
-//            scr_personal_center.setVisibility(View.VISIBLE);
 
         }
         IfLogin.setOnClickListener(new View.OnClickListener() {
@@ -265,7 +259,8 @@ public class MainActivity extends AppCompatActivity {
                 final String username = sharedPre.getString("username", "");
                 String password = sharedPre.getString("password", "");
                 if(!username.equals("")) {
-                    Toast.makeText(getApplicationContext(), "用户详情界面", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, PersonDetailActivity.class);
+                    startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -273,20 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-//        btn_login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        btn_register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-//            }
-//        });
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

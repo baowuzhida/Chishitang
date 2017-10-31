@@ -1,59 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/LInfLayout"
-        android:layout_marginTop="20dp"
+        android:id="@+id/Per"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/login_input_rounded_bg"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="visible">
 
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/personalcenter_roundedmage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/eat"
+            app:riv_border_color="@color/b_red_lighter"
+            app:riv_border_width="1dp"
+            app:riv_oval="true" />
 
         <TextView
-            android:id="@+id/personalcenter_red"
-            android:layout_width="wrap_content"
+            android:id="@+id/user_change_head"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:drawableBottom="@mipmap/ic_redbag"
+            android:layout_marginRight="15dp"
+            android:layout_weight="3"
+            android:drawableEnd="@mipmap/ic_goright"
             android:gravity="center"
-            android:text="@string/red" />
-
-        <TextView
-            android:id="@+id/personalcenter_point"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:drawableBottom="@mipmap/ic_point"
-            android:gravity="center"
-            android:text="@string/point" />
-
-        <TextView
-            android:id="@+id/personalcenter_coin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:drawableBottom="@mipmap/ic_coin"
-            android:gravity="center"
-            android:text="@string/coin" />
-
-
+            android:text="@string/user_change_head"
+            android:textSize="@dimen/text_size_2sp"
+            android:visibility="visible" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,14 +48,14 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/user_change_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="@string/user_hint_myfavorite" />
+            android:text="@string/user_change_name" />
 
         <View
             android:layout_width="match_parent"
@@ -80,14 +63,14 @@
             android:background="@color/line_bg" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/user_change_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="@string/user_hint_myevaluate" />
+            android:text="@string/user_change_password" />
 
         <View
             android:layout_width="match_parent"
@@ -95,14 +78,14 @@
             android:background="@color/line_bg" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/user_change_telephone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="我的客服" />
+            android:text="@string/user_change_telephone" />
 
         <View
             android:layout_width="match_parent"
@@ -110,14 +93,14 @@
             android:background="@color/line_bg" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/user_change_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="加盟合作" />
+            android:text="@string/user_change_email" />
 
     </LinearLayout>
 

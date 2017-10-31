@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_addpassword;
     private EditText register_addemail;
     private EditText register_addphone;
-    private Button register_register;
+    private Button register_next;
     private Toolbar toolbar;
 
     protected void onCreate(Bundle savedInstanceState){
@@ -48,9 +48,9 @@ public class RegisterActivity extends AppCompatActivity {
         register_addpassword = (EditText)findViewById(R.id.register_addpassword);
         register_addemail = (EditText)findViewById(R.id.register_addemail);
         register_addphone = (EditText)findViewById(R.id.register_addphone);
-        register_register = (Button)findViewById(R.id.register_register);
+        register_next = (Button)findViewById(R.id.register_next);
 
-        register_register.setOnClickListener(new View.OnClickListener() {
+        register_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(check()){
@@ -60,36 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    Handler registerhandle=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            String type=(String)msg.obj;
-            if(msg.obj==null){
-                type = "connfail";
-            }
-            switch (type) {
-                case "ok":
-                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    RegisterActivity.this.finish();
-                    break;
-                case "nophone":
-                    Toast.makeText(getApplicationContext(), "电话号码重复", Toast.LENGTH_SHORT).show();
-                    break;
-                case "noemail":
-                    Toast.makeText(getApplicationContext(), "邮箱重复", Toast.LENGTH_SHORT).show();
-                    break;
-                case "connfail":
-                    Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
+
 
     public void gotoregister(){
         String name = register_addname.getText().toString();
@@ -97,9 +68,14 @@ public class RegisterActivity extends AppCompatActivity {
         String email = register_addemail.getText().toString();
         String phone = register_addphone.getText().toString();
 
-        HttpUtil httpUtil = new HttpUtil();
-        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","accountNumber="+name+"&password="+psd+"&email="+email+"&phone="+phone+"&type=register",registerhandle);
+        Intent intent = new Intent(RegisterActivity.this,VerificationActivity.class);
+        intent.putExtra("phone",phone);
+        intent.putExtra("name",name);
+        intent.putExtra("password",psd);
+        intent.putExtra("email",email);
+        startActivity(intent);
     }
+
     public boolean check(){
         String name = register_addname.getText().toString();
         String psd = register_addpassword.getText().toString();

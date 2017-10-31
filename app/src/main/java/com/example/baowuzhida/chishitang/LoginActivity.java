@@ -32,6 +32,8 @@ import org.json.JSONObject;
 import Bean.UserBean;
 import Interpolator_extends.JellyInterpolator;
 import Link.HttpUtil;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
 /**
  * Created by Baowuzhida on 2017/7/20.
@@ -107,6 +109,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 name = login_input_username.getText().toString();
                 psd = login_input_password.getText().toString();
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(getApplicationContext(),"姓名不能为空",Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if (TextUtils.isEmpty(psd)) {
+                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
                 mWidth = login_login.getMeasuredWidth();
                 mHeight = login_login.getMeasuredHeight();
@@ -161,9 +171,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             switch (type) {
                 case "no":
                     Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
+                    progress.setVisibility(View.GONE);
+                    mInputLayout.setVisibility(View.VISIBLE);
                     break;
                 case "connfail":
                     Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
+                    progress.setVisibility(View.GONE);
+                    mInputLayout.setVisibility(View.VISIBLE);
                     break;
                 default:
                     UserBean userBean=new UserBean();
@@ -188,14 +202,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void Login(String name,String psd){
 
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(getApplicationContext(),"姓名不能为空",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(psd)) {
-            Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         HttpUtil httpUtil = new HttpUtil();
         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","accountNumber="+name+"&password="+psd+"&type=login",loginhandle);
     }
