@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.baowuzhida.chishitang"
+    android:versionCode="2"
+    android:versionName="1.1"
     >
     <uses-permission  android:name="android.permission.INTERNET"/>  <!-- 连接网络权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>  <!-- 写入SD卡权限 -->
@@ -33,13 +35,23 @@
         <meta-data android:name="Mob-AppKey" android:value="21cec92c89628"/>
         <meta-data android:name="Mob-AppSecret" android:value="dbbd140d9d81e8e0e5e0b23cc32da9b8"/>
 
-
-
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <!--Update-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.baowuzhida.chishitang.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
 
         <activity
             android:name=".WelcomeActivity">
@@ -122,6 +134,12 @@
 
         <activity
             android:name=".VerificationActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".PersonDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
         </activity>

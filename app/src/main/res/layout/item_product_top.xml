@@ -12,6 +12,7 @@
         android:layout_marginTop="5dp"
         android:orientation="vertical">
         <!-- TODO: Update blank fragment layout -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -22,11 +23,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
-                android:drawableTop="@mipmap/im_food_pudding"
+                android:layout_weight="1"
                 android:background="@color/button"
+                android:drawableTop="@mipmap/im_food_pudding"
                 android:gravity="center"
-                android:text="@string/product_all"
-                android:layout_weight="1"/>
+                android:textSize="12sp"
+                android:text="@string/product_all" />
 
             <TextView
                 android:id="@+id/product_special"
@@ -37,6 +39,7 @@
                 android:background="@color/b_red"
                 android:gravity="center"
                 android:text="@string/product_special"
+                android:textSize="12sp"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -55,6 +58,7 @@
                 android:background="@color/a_blue"
                 android:gravity="center"
                 android:text="@string/product_vote"
+                android:textSize="12sp"
                 android:layout_weight="1"/>
 
             <TextView
@@ -66,6 +70,7 @@
                 android:background="@color/SpringGreen"
                 android:gravity="center"
                 android:text="@string/product_fruit"
+                android:textSize="12sp"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -74,16 +79,10 @@
             android:id="@+id/banner_view_pager"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp">
 
         </com.youth.banner.Banner>
-        <!--<com.jude.rollviewpager.RollPagerView-->
-            <!--android:id="@+id/roll_view_pager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_height="150dp"-->
-            <!--app:rollviewpager_play_delay="3000"/>-->
     </LinearLayout>
 
 </LinearLayout>

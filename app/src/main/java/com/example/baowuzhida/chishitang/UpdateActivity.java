@@ -15,13 +15,14 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import Interpolator_extends.RoundProgressBar;
+
 import java.io.File;
+import java.text.DecimalFormat;
 
 import Link.UpdateManager;
-
 
 /**
  * Created by hasee on 2017/10/24.
@@ -33,13 +34,14 @@ public class UpdateActivity extends AppCompatActivity {
     public static String versionName,serverVersionName,downloadResult;
     public static receiveVersionHandler handler;
     private UpdateManager manager = UpdateManager.getInstance();
-    private ProgressBar proBar;
+    private RoundProgressBar proBar;
 
     Button  button;
     TextView textView1;
     TextView textView2;
     TextView textView3;
     TextView tv;
+    TextView tv_jindu;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,13 @@ public class UpdateActivity extends AppCompatActivity {
         final Context c = this;
         version = manager.getVersion(c);
         versionName = manager.getVersionName(c);
-        proBar=(ProgressBar)findViewById(R.id.progressBar_id);
+        proBar=(RoundProgressBar)findViewById(R.id.progressBar_id);
 
         button=(Button)findViewById(R.id.updata_button);
         textView1=(TextView)findViewById(R.id.update_text1);
         textView2=(TextView)findViewById(R.id.update_text2);
         textView3=(TextView)findViewById(R.id.update_text3);
+        tv_jindu=(TextView)findViewById(R.id.update_jindu);
 
         tv=(TextView)findViewById(R.id.update4);
         tv.setText("当前版本号:"+version+"\n"+"当前版本名:"+versionName);
@@ -84,6 +87,13 @@ public class UpdateActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             proBar.setProgress(msg.arg1);
+            double len=msg.arg2*msg.arg1*1.0;
+            DecimalFormat fnum   =   new   DecimalFormat("##0.00");
+            String   dd=fnum.format(msg.arg2*1.0/1024/1024);
+            String   ss=fnum.format(len/1024/1024/100);
+            tv_jindu.setText(ss+"M/"+dd+"M");
+            tv_jindu.setVisibility(View.VISIBLE);
+            button.setVisibility(View.GONE);
             proBar.setVisibility(View.VISIBLE);
             if(msg.arg1 == 100){
                 Intent intent = new Intent(Intent.ACTION_VIEW);

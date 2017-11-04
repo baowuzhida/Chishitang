@@ -35,8 +35,8 @@
 
         <include
             android:id="@+id/main_personalcenter"
-            android:visibility="gone"
-            layout="@layout/activity_person"/>
+            layout="@layout/activity_person"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/main_special"

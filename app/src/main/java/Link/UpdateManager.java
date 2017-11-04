@@ -150,10 +150,13 @@ public class UpdateManager {
     public void downloadApkFile(Context context){
         String savePath = Environment.getExternalStorageDirectory()+"/eat.apk";
         String serverFilePath = "http://119.23.205.112:8080/eatCanteen_war/appUpdate/eat.png";
+        int leng;
         try {
             if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
                 URL serverURL = new URL(serverFilePath);
                 HttpURLConnection connect = (HttpURLConnection) serverURL.openConnection();
+                connect.setRequestProperty("Accept-Encoding", "identity");
+                leng=connect.getContentLength();
                 BufferedInputStream bis = new BufferedInputStream(connect.getInputStream());
                 File apkfile = new File(savePath);
                 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(apkfile));
@@ -169,6 +172,7 @@ public class UpdateManager {
                     progress = (int) (((float) downLength / fileLength) * 100);
                     Message msg = new Message();
                     msg.arg1 = progress;
+                    msg.arg2 = leng;
                     UpdateActivity.handler.sendMessage(msg);
                     //System.out.println("发送"+progress);
                 }

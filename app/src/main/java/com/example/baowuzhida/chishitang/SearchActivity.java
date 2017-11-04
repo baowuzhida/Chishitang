@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import Adapter.ProductMainAdapter;
+import Adapter.ProductAllAdapter;
 import Bean.ProductBean;
 import Link.HttpUtil;
 
@@ -62,7 +62,7 @@ public class SearchActivity extends Activity {
         search_clearsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPre=getSharedPreferences("SearchHistroy", MODE_APPEND);
+                SharedPreferences sharedPre=getSharedPreferences("SearchHistroy", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPre.edit();
                 editor.clear();
                 editor.apply();
@@ -85,10 +85,10 @@ public class SearchActivity extends Activity {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                Toast.makeText(getApplicationContext(),"搜索"+query,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"搜索"+query,Toast.LENGTH_SHORT).show();
 
                 //获取SharedPreferences对象
-                SharedPreferences sharedPre=getSharedPreferences("SearchHistroy", MODE_APPEND);
+                SharedPreferences sharedPre=getSharedPreferences("SearchHistroy", MODE_PRIVATE);
 
                 String oldText = sharedPre.getString("search_history", "");
                 StringBuilder builder = new StringBuilder(query);
@@ -134,8 +134,8 @@ public class SearchActivity extends Activity {
                         {
                             e.printStackTrace();
                         }
-                        ProductMainAdapter productMainAdapter =new ProductMainAdapter((LinkedList<ProductBean>)linkedList,SearchActivity.this);
-                        mListView.setAdapter(productMainAdapter);
+                        ProductAllAdapter productAllAdapter =new ProductAllAdapter((LinkedList<ProductBean>)linkedList,SearchActivity.this);
+                        mListView.setAdapter(productAllAdapter);
                     }
                 };
                 HttpUtil httpUtil=new HttpUtil();
