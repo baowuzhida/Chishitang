@@ -81,6 +81,18 @@
             android:textSize="12sp" />
 
         <Button
+            android:id="@+id/orderlist_orders_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="2"
+            android:background="@drawable/order_btn"
+            android:elevation="0dp"
+            android:text="@string/order_hint_order_code"
+            android:textSize="12sp"
+            android:textColor="@color/white" />
+
+        <Button
             android:id="@+id/orderlist_orders_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

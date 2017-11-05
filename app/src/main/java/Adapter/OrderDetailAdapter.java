@@ -103,7 +103,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 
                 LayoutInflater factory = LayoutInflater.from(mContext);
                 // 把activity_login中的控件定义在View中
-                final View view = factory.inflate(R.layout.windows_evaluate_input, null);
+                final View view = factory.inflate(R.layout.dialog_evaluate_input, null);
                 // 将LoginActivity中的控件显示在对话框中
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setView(view);
@@ -138,7 +138,6 @@ public class OrderDetailAdapter extends BaseAdapter {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa +                          "+text_evaluare.getText());
                                         HttpUtil httpUtil = new HttpUtil();
                                         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/UserEvaluateServlect","evaluate="+text_evaluare.getText()+"&product_id="+productBean.getProduct_id()+"&type=add",evaluareHandler);
                                         finalDialog.dismiss();

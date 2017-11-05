@@ -112,7 +112,7 @@ public class ProductMainAdapter extends BaseAdapter {
                     intent.putExtra("page", 0);
                     intent.setClass(mContext, ProductAllActivity.class);
                     mContext.startActivity(intent);
-                    Toast.makeText(mContext, "查看所有菜品 ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "查看所有菜品 ", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.product_special.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class ProductMainAdapter extends BaseAdapter {
                     intent.putExtra("page", 1);
                     intent.setClass(mContext, ProductAllActivity.class);
                     mContext.startActivity(intent);
-                    Toast.makeText(mContext, "查看特色菜品 ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "查看特色菜品 ", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.product_vote.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class ProductMainAdapter extends BaseAdapter {
                     intent.putExtra("page", 2);
                     intent.setClass(mContext, ProductAllActivity.class);
                     mContext.startActivity(intent);
-                    Toast.makeText(mContext, "查看众筹菜品 ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "查看众筹菜品 ", Toast.LENGTH_SHORT).show();
                 }
             });
         }

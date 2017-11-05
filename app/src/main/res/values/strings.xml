@@ -52,6 +52,7 @@
     <string name="order_hint_order_amount">订单金额： </string>
     <string name="order_hint_order_time">订单时间： </string>
     <string name="order_hint_order_look">查看订单</string>
+    <string name="order_hint_order_code">查看二维码</string>
     <string name="order_show_nologin">您尚未登陆！请登录！</string>
     <string name="order_hint_order_evaluate">评价菜品</string>
     <!--搜索界面-->

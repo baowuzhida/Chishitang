@@ -179,7 +179,6 @@ public class ShoppingCartActivity extends BaseActivity implements View.OnClickLi
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-
                                         Handler orderhandler = new Handler(){
                                             public void handleMessage(Message msg){
                                                 super.handleMessage(msg);

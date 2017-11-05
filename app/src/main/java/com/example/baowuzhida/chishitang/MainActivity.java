@@ -539,11 +539,12 @@ public class MainActivity extends AppCompatActivity {
             //在本例中arg2=arg3
             HashMap<String, Object> item = (HashMap<String, Object>) arg0.getItemAtPosition(position);
             //显示所选Item的ItemText
+            Intent intent;
             switch (position){
                 case 0:
                     break;
                 case 1:
-                    Intent intent = new Intent(MainActivity.this, VoteActivity.class);
+                    intent = new Intent(MainActivity.this, VoteActivity.class);
                     startActivity(intent);
                     break;
                 case 2:
@@ -551,6 +552,8 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     break;
                 case 4:
+                    intent = new Intent(MainActivity.this, SeatActivity.class);
+                    startActivity(intent);
                     break;
             }
             Toast.makeText(getApplicationContext(), "点击"+item.get("ItemText"), Toast.LENGTH_SHORT).show();

@@ -1,12 +1,18 @@
 package Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 import Bean.OrdersBean;
+import Link.ZxingUtils;
 
 /**
  * Created by hasee on 2017/8/5.
@@ -78,6 +85,7 @@ public class OrdersAdapter extends BaseAdapter{
             holder.textPrice=(TextView)convertView.findViewById(R.id.orderlist_orders_price);
             holder.textTime=(TextView)convertView.findViewById(R.id.orderlist_orders_time);
             holder.textLook=(Button)convertView.findViewById(R.id.orderlist_orders_detail);
+            holder.textCode=(Button)convertView.findViewById(R.id.orderlist_orders_code);
             convertView.setTag(holder);   //将Holder存储到convertView中
         }
         else
@@ -105,6 +113,26 @@ public class OrdersAdapter extends BaseAdapter{
                 Toast.makeText(mContext,"查看订单"+id, Toast.LENGTH_SHORT).show();
             }
         });
+
+        holder.textCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater factory = LayoutInflater.from(mContext);
+                // 把activity_login中的控件定义在View中
+                final View view = factory.inflate(R.layout.dialog_orders_code, null);
+                // 将LoginActivity中的控件显示在对话框中
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setView(view);
+                ImageView imagecode = (ImageView)view.findViewById(R.id.orders_code);
+                AlertDialog dialog = builder.create();
+                Bitmap bitmap = ZxingUtils.createBitmap(String.valueOf(id));
+                imagecode.setImageBitmap(bitmap);
+                Window window = dialog.getWindow();
+                assert window != null;
+                window.setGravity(Gravity.CENTER); // 此处可以设置dialog显示的位置
+                dialog.show();
+            }
+        });
         return convertView;
     }
 
@@ -113,7 +141,7 @@ public class OrdersAdapter extends BaseAdapter{
         TextView textUserID;
         TextView textPrice;
         TextView textTime;
-        Button textLook;
+        Button textLook,textCode;
     }
 
 }

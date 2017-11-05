@@ -18,6 +18,14 @@
         android:layout_height="wrap_content"
         android:src="@drawable/welcometitle" />
 
+    <TextView
+        android:id="@+id/telephone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/b_red"
+        android:textSize="18sp" />
+
     <LinearLayout
         android:id="@+id/login_ll"
         android:layout_width="match_parent"

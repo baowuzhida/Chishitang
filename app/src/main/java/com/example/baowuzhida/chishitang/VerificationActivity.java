@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
     Button mButtonGetCode;
     Button mButtonRegister;
     Toolbar toolbar;
+    TextView showtelephone;
 
     EventHandler eventHandler;
 //    String strPhoneNumber;
@@ -45,7 +47,9 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
 
-        toolbar = (Toolbar)findViewById(R.id.verification_toolbar);
+        initView();
+
+
         toolbar.setNavigationIcon(R.mipmap.ic_back);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -66,10 +70,8 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
             password = intent.getStringExtra("password");
             name = intent.getStringExtra("name");
         }
-        mEditTextCode = (EditText) findViewById(R.id.register_inputcode);
 
-        mButtonGetCode = (Button) findViewById(R.id.register_getcode);
-        mButtonRegister = (Button) findViewById(R.id.register_register);
+        showtelephone.setText("向号码："+phone+" 发送一条验证短信");
 
         mButtonGetCode.setOnClickListener(this);
         mButtonRegister.setOnClickListener(this);
@@ -97,6 +99,17 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
         };
 
         SMSSDK.registerEventHandler(eventHandler);
+    }
+
+    private void initView(){
+        toolbar = (Toolbar)findViewById(R.id.verification_toolbar);
+
+        showtelephone=(TextView)findViewById(R.id.telephone);
+
+        mEditTextCode = (EditText) findViewById(R.id.register_inputcode);
+
+        mButtonGetCode = (Button) findViewById(R.id.register_getcode);
+        mButtonRegister = (Button) findViewById(R.id.register_register);
     }
 
     @Override

@@ -165,6 +165,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String type=(String)msg.obj;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if(msg.obj==null){
                 type = "connfail";
             }
