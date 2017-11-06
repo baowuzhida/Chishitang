@@ -23,6 +23,7 @@ import Adapter.EvaluateAdapter;
 import Bean.UserBean;
 import Bean.UserEvaluateBean;
 import Link.HttpUtil;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Baowuzhida on 2017/9/15.
@@ -117,10 +118,10 @@ public class VoteDetailActivity extends AppCompatActivity {
                         if(type.equals("ok")){
                             vote_number++;
                             vote_details_votes.setText("票数："+vote_number);
-                            Toast.makeText(getApplicationContext(),"投票成功",Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "投票成功", Toast.LENGTH_SHORT, true).show();
                         }
                         else
-                            Toast.makeText(getApplicationContext(),"投票失败",Toast.LENGTH_SHORT).show();
+                            Toasty.warning(getApplicationContext(), "投票失败", Toast.LENGTH_SHORT, true).show();
                     }
                 };
                 HttpUtil httpUtil=new HttpUtil();

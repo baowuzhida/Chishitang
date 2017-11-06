@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import Link.HttpUtil;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Baowuzhida on 2017/10/31.
@@ -126,12 +127,14 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
                 Log.d(TAG, mEditTextCode.getText().toString());
                 SMSSDK.submitVerificationCode("86", phone, mEditTextCode.getText().toString());
             } else {
-                Toast.makeText(this, "密码长度不正确", Toast.LENGTH_SHORT).show();
+                Toasty.warning(getApplicationContext(), "密码长度不正确", Toast.LENGTH_SHORT, true).show();
+//                Toast.makeText(this, "密码长度不正确", Toast.LENGTH_SHORT).show();
             }
         } else if (view.getId() == R.id.register_getcode) {
             String  strPhoneNumber = phone;
             if (null == strPhoneNumber || "".equals(strPhoneNumber) || strPhoneNumber.length() != 11) {
-                Toast.makeText(this, "电话号码输入有误", Toast.LENGTH_SHORT).show();
+                Toasty.warning(getApplicationContext(), "电话号码输入有误", Toast.LENGTH_SHORT, true).show();
+//                Toast.makeText(this, "电话号码输入有误", Toast.LENGTH_SHORT).show();
                 return;
             }
             SMSSDK.getVerificationCode("86", strPhoneNumber);
@@ -167,22 +170,22 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
             }
             switch (type) {
                 case "ok":
-                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT, true).show();
                     Intent intent = new Intent(VerificationActivity.this, MainActivity.class);
                     startActivity(intent);
                     VerificationActivity.this.finish();
                     break;
                 case "nophone":
-                    Toast.makeText(getApplicationContext(), "电话号码重复", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "电话号码重复", Toast.LENGTH_SHORT, true).show();
                     break;
                 case "noemail":
-                    Toast.makeText(getApplicationContext(), "邮箱重复", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "邮箱重复", Toast.LENGTH_SHORT, true).show();
                     break;
                 case "connfail":
-                    Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT, true).show();
                     break;
                 default:
-                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT, true).show();
                     break;
             }
         }
@@ -200,11 +203,11 @@ public class VerificationActivity extends AppCompatActivity implements View.OnCl
                     Log.e(TAG, "result : " + result + ", event: " + event + ", data : " + data);
                     if (result == SMSSDK.RESULT_COMPLETE) { //回调  当返回的结果是complete
                         if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) { //获取验证码
-                            Toast.makeText(VerificationActivity.this, "发送验证码成功", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "发送验证码成功", Toast.LENGTH_SHORT, true).show();
                             Log.d(TAG, "get verification code successful.");
                         } else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) { //提交验证码
                             Log.d(TAG, "submit code successful");
-                            Toast.makeText(VerificationActivity.this, "提交验证码成功", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "提交验证码成功", Toast.LENGTH_SHORT, true).show();
 
                             HttpUtil httpUtil = new HttpUtil();
                             httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","accountNumber="+name+"&password="+password+"&email="+email+"&phone="+phone+"&type=register",registerhandle);

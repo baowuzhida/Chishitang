@@ -34,6 +34,7 @@ import Interpolator_extends.JellyInterpolator;
 import Link.HttpUtil;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Baowuzhida on 2017/7/20.
@@ -175,12 +176,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             switch (type) {
                 case "no":
-                    Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
                     progress.setVisibility(View.GONE);
                     mInputLayout.setVisibility(View.VISIBLE);
                     break;
                 case "connfail":
-                    Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
                     progress.setVisibility(View.GONE);
                     mInputLayout.setVisibility(View.VISIBLE);
                     break;

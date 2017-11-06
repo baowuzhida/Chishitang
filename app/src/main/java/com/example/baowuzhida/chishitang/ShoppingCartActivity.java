@@ -25,6 +25,7 @@ import Bean.OrdersDetailsBean;
 import Bean.ShoppingCartBean;
 import Link.CartDao;
 import Link.HttpUtil;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by AYD on 2016/11/21.
@@ -192,7 +193,8 @@ public class ShoppingCartActivity extends BaseActivity implements View.OnClickLi
                                                             super.handleMessage(msg);
                                                             Integer position = (Integer) msg.obj;
                                                             CheckOut(a, position);
-                                                            Toast.makeText(ShoppingCartActivity.this, "已结账", Toast.LENGTH_SHORT).show();
+                                                            Toasty.success(getApplicationContext(), "已结账!", Toast.LENGTH_SHORT, true).show();
+//                                                            Toast.makeText(ShoppingCartActivity.this, "已结账", Toast.LENGTH_SHORT).show();
                                                         }
                                                     };
                                                     shoppingCartAdapter.PostPosition(positionhandler);
@@ -202,9 +204,6 @@ public class ShoppingCartActivity extends BaseActivity implements View.OnClickLi
                                         };
                                         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/OrdersServlet"
                                                 ,"ArrayListOrderDetail="+jsonArray.toString()+"&totalPrice="+totalPrice+"&type=add",orderhandler);
-
-
-
                                     }
                                 })
                                 .setNegativeButton("否", null)

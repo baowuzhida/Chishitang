@@ -73,7 +73,7 @@ public class VoteAdapter extends BaseAdapter {
         }
 //        gridView=(GridView)convertView.findViewById(R.id.gv_1);
         final String url = mData.get(position).getProduct().getProduct_image();
-
+        final int votes = mData.get(position).getNumber_votes();
         Glide.with(mContext)
                 .load(url)
                 .placeholder(R.drawable.eat)
@@ -82,6 +82,7 @@ public class VoteAdapter extends BaseAdapter {
 
         holder.ProductName.setText("商品名称：" + mData.get(position).getProduct().getProduct_name());
         holder.voteAdd.setTag(position);
+        holder.voteAdd.setText("票数："+votes+"  投票");
         final FavoriteProduct favoriteProduct=mData.get(position);
         //给Button添加单击事件  添加Button之后ListView将失去焦点  需要的直接把Button的焦点去掉
         holder.voteAdd.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +94,6 @@ public class VoteAdapter extends BaseAdapter {
                         super.handleMessage(msg);
                         String type=(String)msg.obj;
                         if(type.equals("ok")){
-
                             Toast.makeText(mContext,"投票成功",Toast.LENGTH_SHORT).show();
                             VoteActivity.getObj().refreshList();
                         }

@@ -50,6 +50,7 @@ import java.util.LinkedList;
 import Bean.OrdersBean;
 import Link.HttpUtil;
 import Link.SharedPrefsCookieUtil;
+import es.dmoral.toasty.Toasty;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -202,12 +203,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.toolbar_menu:
                     Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this, "进入app信息", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.toolbar_search:
                     Intent intentsearch = new Intent(MainActivity.this, SearchActivity.class);
                     startActivity(intentsearch);
-                    Toast.makeText(MainActivity.this, "进入搜索页面", Toast.LENGTH_SHORT).show();
                     break;
             } return true;
             }
@@ -262,7 +261,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, PersonDetailActivity.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
@@ -284,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
-
     }
     //订单信息
     public void contralOrder() {
@@ -342,13 +341,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 switch (type) {
                     case "no":
-                        Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT, true).show();
+//                        Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
                         break;
                     case "connfail":
-                        Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT, true).show();
+//                        Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
                         break;
                     default:
-                        Toast.makeText(getApplicationContext(), "欢迎回来 " + username, Toast.LENGTH_SHORT).show();
+                        Toasty.success(getApplicationContext(), "欢迎回来 "+ username, Toast.LENGTH_SHORT, true).show();
+//                        Toast.makeText(getApplicationContext(), "欢迎回来 " + username, Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -356,25 +358,23 @@ public class MainActivity extends AppCompatActivity {
         if (!(username.equals("") || password.equals(""))) {
             httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet", "accountNumber=" + username + "&password=" + password + "&type=login", ifloginhandle);
         }
-
-//        SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
-//        String username = sharedPre.getString("username", "");
-//        String password = sharedPre.getString("password","");
-//        return !(username.equals("") || password.equals(""));
     }
     //退出时清除本地保存的用户信息
     public void cleanShare(){ //清除SharedPreferences中LoginManager数据
 
         ListView order_listview = (ListView)findViewById(R.id.order_listview);
-        order_listview.setAdapter(null);
-        ArrayAdapter adapter = (ArrayAdapter) order_listview.getAdapter();// 获取当前listview的adapter
-        if(adapter!=null){
-            int count = adapter.getCount();// listview多少个组件
-            if (count > 0) {
-                order_listview.setAdapter(new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1));
-            }
-        }
+        TextView order_show_login=(TextView)findViewById(R.id.order_show_login);
+        order_listview.setVisibility(View.GONE);
+        order_show_login.setText("尚未登陆请登录");
+//        order_listview.setAdapter(null);
+//        ArrayAdapter adapter = (ArrayAdapter) order_listview.getAdapter();// 获取当前listview的adapter
+//        if(adapter!=null){
+//            int count = adapter.getCount();// listview多少个组件
+//            if (count > 0) {
+//                order_listview.setAdapter(new ArrayAdapter<String>(this,
+//                        android.R.layout.simple_list_item_1));
+//            }
+//        }
 
         Handler logouthander = new Handler(){
             public void handleMessage(Message msg) {
@@ -382,16 +382,14 @@ public class MainActivity extends AppCompatActivity {
                 String type=(String)msg.obj;
 
                 if(msg.obj==null){
-                    Toast.makeText(getApplicationContext(), "服务端连接失败", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "服务端连接失败", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(), "服务端连接失败", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(type.equals("ok")){
                     IfLogin.setText("未登录");
 
                     btn_logout.setVisibility(View.GONE);
-//                    LRLayout.setVisibility(View.VISIBLE);
-//                    scr_personal_center.setVisibility(View.GONE);
-//                    LInfLayout.setVisibility(View.GONE);
                     RoundedImage.setImageDrawable(getResources().getDrawable(R.drawable.eat));
                     SharedPreferences sharedPre = getSharedPreferences("LoginManager", MODE_PRIVATE);;
                     SharedPreferences.Editor editor=sharedPre.edit();
@@ -400,11 +398,12 @@ public class MainActivity extends AppCompatActivity {
 
                     show_login.setVisibility(View.GONE);
                     orderswipe.setVisibility(View.VISIBLE);
-
-                    Toast.makeText(getApplicationContext(), "已登出", Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), "已登出", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(), "已登出", Toast.LENGTH_LONG).show();
                 }
                 else
-                    Toast.makeText(getApplicationContext(), "服务端登出失败", Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), "服务端登出失败", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(), "服务端登出失败", Toast.LENGTH_LONG).show();
             }
 
         };
@@ -422,7 +421,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
         final String username=sharedPre.getString("username", "");
         if(username.equals("")){
-            Toast.makeText(getApplicationContext(), "您还未登录呢！", Toast.LENGTH_SHORT).show();
+            Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+//            Toast.makeText(getApplicationContext(), "您还未登录呢！", Toast.LENGTH_SHORT).show();
             orderswipe.setRefreshing(false);
             return;
         }else{

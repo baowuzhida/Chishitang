@@ -23,6 +23,7 @@ import Adapter.VoteAdapter;
 import Bean.FavoriteProduct;
 import Bean.ProductBean;
 import Link.HttpUtil;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Baowuzhida on 2017/8/13.
@@ -70,7 +71,7 @@ public class VoteActivity extends AppCompatActivity {
                         super.handleMessage(msg);
                         String type=(String)msg.obj;
                         if(type.equals("no"))
-                            Toast.makeText(getApplicationContext(),"未搜索到"+query,Toast.LENGTH_SHORT).show();
+                            Toasty.info(getApplicationContext(), "未搜索到"+query, Toast.LENGTH_SHORT, true).show();
                         else
                         {
                             try {

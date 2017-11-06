@@ -92,7 +92,6 @@ public class ProductAllActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentcart = new Intent(ProductAllActivity.this, ShoppingCartActivity.class);
                 startActivity(intentcart);
-                Toast.makeText(ProductAllActivity.this, "进入购物车", Toast.LENGTH_SHORT).show();
             }
         });
         fbbtn_question.setOnClickListener(new View.OnClickListener() {

@@ -23,6 +23,7 @@ import java.util.List;
 import Adapter.ProductAllAdapter;
 import Bean.ProductBean;
 import Link.HttpUtil;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Baowuzhida on 2017/7/29.
@@ -74,8 +75,8 @@ public class SearchActivity extends Activity {
                 {
                     search.add(searchdetail[i]);
                 }
-
-                Toast.makeText(getApplicationContext(),"已清除",Toast.LENGTH_SHORT).show();
+                Toasty.success(getApplicationContext(),"已清除", Toast.LENGTH_SHORT, true).show();
+//                Toast.makeText(getApplicationContext(),"已清除",Toast.LENGTH_SHORT).show();
                 searchadapter.notifyDataSetChanged();
             }
         });

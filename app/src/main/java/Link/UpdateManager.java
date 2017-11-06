@@ -6,8 +6,10 @@ package Link;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -68,9 +70,10 @@ public class UpdateManager {
         try {
             URL serverURL = new URL("http://119.23.205.112:8080/eatCanteen_war/appUpdate/ver.aspx");
             HttpURLConnection connect = (HttpURLConnection) serverURL.openConnection();
+            connect.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
             BufferedInputStream bis = new BufferedInputStream(connect.getInputStream());
-            int n = 0;
-            while((n = bis.read(buffer))!= -1){
+            BufferedReader br = new BufferedReader(new InputStreamReader(bis,"UTF-8"));
+            while(( br.readLine())!= null){
                 serverJson = new String(buffer);
             }
         } catch (Exception e) {
