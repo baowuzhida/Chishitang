@@ -149,5 +149,23 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
         </activity>
+
+        <activity
+            android:name=".CrowdFundingActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".CrowdFundJoinActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".CrowdFundSupportActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
     </application>
 </manifest>

@@ -60,17 +60,14 @@ public class OrdersAdapter extends BaseAdapter{
     {
         itemCount = number;
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public Object getItem(int position) {
         return null;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
@@ -94,6 +91,8 @@ public class OrdersAdapter extends BaseAdapter{
         }
 
         final int id = mData.get(position).getOrders_id();
+        final int userid = mData.get(position).getUser_id();
+        final String time = mData.get(position).getOrders_time();
 
         holder.textOrdersID.setText("订单ID："+mData.get(position).getOrders_id());
         holder.textUserID.setText("用户ID："+mData.get(position).getUser_id());
@@ -110,7 +109,7 @@ public class OrdersAdapter extends BaseAdapter{
                 intent.setClass(mContext, OrderDetailActivity.class);
                 mContext.startActivity(intent);
 
-                Toast.makeText(mContext,"查看订单"+id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext,"查看订单"+id, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -125,7 +124,7 @@ public class OrdersAdapter extends BaseAdapter{
                 builder.setView(view);
                 ImageView imagecode = (ImageView)view.findViewById(R.id.orders_code);
                 AlertDialog dialog = builder.create();
-                Bitmap bitmap = ZxingUtils.createBitmap(String.valueOf(id));
+                Bitmap bitmap = ZxingUtils.createBitmap(String.valueOf("userid="+userid+"id="+id+"Time="+time));
                 imagecode.setImageBitmap(bitmap);
                 Window window = dialog.getWindow();
                 assert window != null;

@@ -49,10 +49,11 @@ public class EvaluateAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+
+        ViewHolder holder;
 
         if (convertView == null) {
-            holder = new ViewHolder();
+//            holder = new ViewHolder();
             //根据自定义的Item布局加载布局
             convertView = LayoutInflater.from(mContext).inflate(R.layout.evaluate_list_item, parent, false);
             holder = new ViewHolder();

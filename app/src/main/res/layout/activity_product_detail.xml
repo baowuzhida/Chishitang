@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -144,12 +144,12 @@
                 android:id="@+id/evaluates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ListView
                     android:id="@+id/prouct_evaluate_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 

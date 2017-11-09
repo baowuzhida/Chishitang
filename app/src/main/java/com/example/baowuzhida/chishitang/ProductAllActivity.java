@@ -38,8 +38,9 @@ public class ProductAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_all);
 
-        toolbar = (Toolbar)findViewById(R.id.product_all_toolbar);
+        initView();
         toolbar.setNavigationIcon(R.mipmap.ic_back);
+//        toolbar.setSubtitle("美食");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,11 +49,16 @@ public class ProductAllActivity extends AppCompatActivity {
             }
         });
 
-        vp = (ViewPager)findViewById(R.id.product_all_pager);
+
+        contralFab();
+        loadingViewPager();
         Intent intent = getIntent();
         int page = intent.getIntExtra("page", -1);
-        loadingViewPager();
         vp.setCurrentItem(page);
+    }
+    public void initView(){
+        toolbar = (Toolbar)findViewById(R.id.product_all_toolbar);
+        vp = (ViewPager)findViewById(R.id.product_all_pager);
     }
 
     //加载顶部导航

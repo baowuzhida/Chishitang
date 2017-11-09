@@ -110,6 +110,7 @@ public class ProductdetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+
                 if (msg == null) {
                     return;
                 }
@@ -117,6 +118,7 @@ public class ProductdetailActivity extends AppCompatActivity implements View.OnC
                 JSONArray jsonArray;
                 try {
                     jsonArray = new JSONArray((String) msg.obj);
+                    System.out.println(msg.obj+"                      AAA");
                     for(int i = 0;i < jsonArray.length();i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         UserEvaluateBean userEvaluate=new UserEvaluateBean();
@@ -138,6 +140,7 @@ public class ProductdetailActivity extends AppCompatActivity implements View.OnC
                 {
                     e.printStackTrace();
                 }
+
                 EvaluateAdapter evaluateAdapter=new EvaluateAdapter(linkedList,ProductdetailActivity.this);
                 prouct_evaluate_list.setAdapter(evaluateAdapter);
             }

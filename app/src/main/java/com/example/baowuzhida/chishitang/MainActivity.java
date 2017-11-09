@@ -55,13 +55,12 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView product_listview;
+    private ListView product_listview,order_listview;
     private ImageView RoundedImage;
     private View orderView,personalcenterView,specialView,productView;
     private TextView IfLogin,show_login,Point;
     private ScrollView scr_personal_center;
     private SwipeRefreshLayout orderswipe,productswipe;
-    private ListView order_listview;
     private Button btn_logout;
     private Toolbar toolbar;
     private FloatingActionButton fbbtn_shoppingcar,fbbtn_question;
@@ -260,11 +259,13 @@ public class MainActivity extends AppCompatActivity {
                 if(!username.equals("")) {
                     Intent intent = new Intent(MainActivity.this, PersonDetailActivity.class);
                     startActivity(intent);
+
                 }else{
                     Toasty.warning(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT, true).show();
 //                    Toast.makeText(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -362,19 +363,10 @@ public class MainActivity extends AppCompatActivity {
     //退出时清除本地保存的用户信息
     public void cleanShare(){ //清除SharedPreferences中LoginManager数据
 
-        ListView order_listview = (ListView)findViewById(R.id.order_listview);
+        final ListView order_listview = (ListView)findViewById(R.id.order_listview);
         TextView order_show_login=(TextView)findViewById(R.id.order_show_login);
         order_listview.setVisibility(View.GONE);
         order_show_login.setText("尚未登陆请登录");
-//        order_listview.setAdapter(null);
-//        ArrayAdapter adapter = (ArrayAdapter) order_listview.getAdapter();// 获取当前listview的adapter
-//        if(adapter!=null){
-//            int count = adapter.getCount();// listview多少个组件
-//            if (count > 0) {
-//                order_listview.setAdapter(new ArrayAdapter<String>(this,
-//                        android.R.layout.simple_list_item_1));
-//            }
-//        }
 
         Handler logouthander = new Handler(){
             public void handleMessage(Message msg) {
@@ -396,8 +388,8 @@ public class MainActivity extends AppCompatActivity {
                     editor.clear();
                     editor.apply();
 
-                    show_login.setVisibility(View.GONE);
-                    orderswipe.setVisibility(View.VISIBLE);
+                    show_login.setVisibility(View.VISIBLE);
+                    orderswipe.setVisibility(View.GONE);
                     Toasty.info(getApplicationContext(), "已登出", Toast.LENGTH_SHORT, true).show();
 //                    Toast.makeText(getApplicationContext(), "已登出", Toast.LENGTH_LONG).show();
                 }
@@ -417,20 +409,23 @@ public class MainActivity extends AppCompatActivity {
 
         footView = getLayoutInflater().inflate(R.layout.item_view_foot, null);
         ic_down = (ImageView) footView.findViewById(R.id.ic_down);
+        order_listview = (ListView)findViewById(R.id.order_listview);
 
         SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
         final String username=sharedPre.getString("username", "");
         if(username.equals("")){
             Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
 //            Toast.makeText(getApplicationContext(), "您还未登录呢！", Toast.LENGTH_SHORT).show();
+            show_login.setVisibility(View.VISIBLE);
             orderswipe.setRefreshing(false);
             return;
         }else{
+            Toasty.warning(getApplicationContext(), "登录!", Toast.LENGTH_SHORT, true).show();
             show_login.setVisibility(View.GONE);
             orderswipe.setVisibility(View.VISIBLE);
         }
 
-        order_listview = (ListView)findViewById(R.id.order_listview);
+
         Handler orderlisthandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -520,8 +515,8 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                ProductMainAdapter ordersAdapter=new ProductMainAdapter((LinkedList<ProductBean>)linkedList,MainActivity.this);
-                product_listview.setAdapter(ordersAdapter);
+                ProductMainAdapter productMainAdapter=new ProductMainAdapter((LinkedList<ProductBean>)linkedList,MainActivity.this);
+                product_listview.setAdapter(productMainAdapter);
                 productswipe.setRefreshing(false);
 
             }
@@ -550,6 +545,8 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     break;
                 case 3:
+                    intent = new Intent(MainActivity.this, CrowdFundingActivity.class);
+                    startActivity(intent);
                     break;
                 case 4:
                     intent = new Intent(MainActivity.this, SeatActivity.class);

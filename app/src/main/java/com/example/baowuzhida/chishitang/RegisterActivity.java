@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -60,8 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     public void gotoregister(){
         String name = register_addname.getText().toString();
@@ -121,6 +122,22 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {//点击的是返回键
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {//按键的按下事件
+//                Toast.makeText(getApplicationContext(), "dispatchKeyEvent--Down", Toast.LENGTH_SHORT).show();
+//               return false;
+            } else if (event.getAction() == KeyEvent.ACTION_UP && event.getRepeatCount() == 0) {//按键的抬起事件
+//                Toast.makeText(getApplicationContext(), "dispatchKeyEvent--UP", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+//               return false;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 
 }

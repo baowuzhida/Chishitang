@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import Bean.OrdersDetailsBean;
 import Bean.ProductBean;
 import Link.HttpUtil;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by hasee on 2017/8/13.
@@ -99,7 +100,7 @@ public class OrderDetailAdapter extends BaseAdapter {
         holder.evaluate_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "评价菜品"+productBean.getProduct_name(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "评价菜品"+productBean.getProduct_name(), Toast.LENGTH_SHORT).show();
 
                 LayoutInflater factory = LayoutInflater.from(mContext);
                 // 把activity_login中的控件定义在View中
@@ -108,6 +109,8 @@ public class OrderDetailAdapter extends BaseAdapter {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setView(view);
                 final EditText text_evaluare = (EditText)view.findViewById(R.id.text_evaluate);
+
+
                 Button btn_back = (Button)view.findViewById(R.id.btn_back) ;
                 Button btn_save_evaluate=(Button)view.findViewById(R.id.btn_save_evaluate);
                 AlertDialog dialog = builder.create();
@@ -124,6 +127,12 @@ public class OrderDetailAdapter extends BaseAdapter {
                 btn_save_evaluate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        if(text_evaluare.getText().toString().equals("")){
+                            Toasty.info(mContext, "您还没写评价呢!", Toast.LENGTH_SHORT, true).show();
+                            return;
+                        }
+
                         android.app.AlertDialog alert = new android.app.AlertDialog.Builder(mContext).create();
                         alert.setTitle("操作提示");
                         alert.setMessage("您确定要这么评价吗？");
@@ -176,7 +185,8 @@ public class OrderDetailAdapter extends BaseAdapter {
             }
             switch (type) {
                 case "error":
-                    Toast.makeText(mContext, "评价失败", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(mContext, "评价失败!", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(mContext, "评价失败", Toast.LENGTH_SHORT).show();
                     break;
                 case "connfail":
                     Toast.makeText(mContext, "连接超时", Toast.LENGTH_SHORT).show();

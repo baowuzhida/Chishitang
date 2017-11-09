@@ -24,7 +24,7 @@
     <string name="coin">金币</string>
     <string name="red">红包</string>
     <!--主产品界面-->
-    <string name="show_details">商品详情</string>
+    <string name="show_details">查看详情</string>
     <string name="show_evaluates">查看评价</string>
     <string name="product_all">所有美食</string>
     <string name="product_special">特色美食</string>

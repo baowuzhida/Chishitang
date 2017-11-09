@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -80,6 +82,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -102,23 +106,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (v.getId()){
             case R.id.login_goto_register:
-
                 Register();
                 break;
-
             case R.id.login_login:
-
                 name = login_input_username.getText().toString();
                 psd = login_input_password.getText().toString();
                 if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(getApplicationContext(),"姓名不能为空",Toast.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(), "姓名不能为空", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(),"姓名不能为空",Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (TextUtils.isEmpty(psd)) {
-                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
+                    Toasty.info(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT, true).show();
+//                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                     break;
                 }
-
                 mWidth = login_login.getMeasuredWidth();
                 mHeight = login_login.getMeasuredHeight();
                 // 隐藏输入框
@@ -128,7 +130,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 Login(name,psd);
                 break;
-
         }
     }
 
@@ -202,14 +203,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     saveLoginInfo(getApplicationContext(), name, psd,userBean.getUser_headimage());
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
-                    LoginActivity.this.finish();
+                    finish();
                     break;
             }
         }
     };
 
     public void Login(String name,String psd){
-
 
         HttpUtil httpUtil = new HttpUtil();
         httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","accountNumber="+name+"&password="+psd+"&type=login",loginhandle);
@@ -319,5 +319,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         animator3.start();
 
 
+    }
+
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {//点击的是返回键
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {//按键的按下事件
+//                Toast.makeText(getApplicationContext(), "dispatchKeyEvent--Down", Toast.LENGTH_SHORT).show();
+//               return false;
+            } else if (event.getAction() == KeyEvent.ACTION_UP && event.getRepeatCount() == 0) {//按键的抬起事件
+//                Toast.makeText(getApplicationContext(), "dispatchKeyEvent--UP", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+//               return false;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 }

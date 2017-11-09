@@ -25,7 +25,7 @@ public class Product3Fragment extends Fragment {
     private SwipeRefreshLayout mSwipeLayout;
     private GridView textgirdview;
     private ArrayAdapter<String> mAdapter;
-    private List<String> mDatas = new ArrayList<String>(Arrays.asList("Java", "Javascript", "C++", "Ruby", "Json", "HTML"));
+    private List<String> mDatas = new ArrayList<String>(Arrays.asList("暂无"));
     private Handler mHandler = new Handler()
     {
         public void handleMessage(android.os.Message msg)
@@ -33,7 +33,7 @@ public class Product3Fragment extends Fragment {
             switch (msg.what)
             {
                 case REFRESH_COMPLETE:
-                    mDatas.addAll(Arrays.asList("Lucene", "Canvas", "Bitmap"));
+                    mDatas.addAll(Arrays.asList("还是没有"));
 
                     //每次刷新时执行的代码
                     mAdapter.notifyDataSetChanged();

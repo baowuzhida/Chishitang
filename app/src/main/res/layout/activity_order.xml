@@ -21,7 +21,7 @@
         <ListView
             android:id="@+id/order_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
@@ -31,5 +31,6 @@
         android:gravity="center"
         android:text="@string/order_show_nologin"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="visible" />
 </LinearLayout>

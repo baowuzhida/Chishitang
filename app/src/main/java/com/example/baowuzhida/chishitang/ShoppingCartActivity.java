@@ -2,6 +2,7 @@ package com.example.baowuzhida.chishitang;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
@@ -128,8 +129,18 @@ public class ShoppingCartActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.tv_settlement:
-                tv_settlement = (Button)findViewById(R.id.tv_settlement);
-                tv_settlement.setOnClickListener(new View.OnClickListener() {
+//                tv_settlement = (Button)findViewById(R.id.tv_settlement);
+
+                SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
+                final String username=sharedPre.getString("username", "");
+                if(username.equals("")){
+                    Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+//            Toast.makeText(getApplicationContext(), "您还未登录呢！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                    tv_settlement.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         final ArrayList<OrdersDetailsBean> a = new ArrayList<>();
