@@ -7,7 +7,7 @@
     android:layout_weight="1">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/crowdfund_roundedmage"
+        android:id="@+id/crowdfund_roundedimage"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:layout_gravity="top"

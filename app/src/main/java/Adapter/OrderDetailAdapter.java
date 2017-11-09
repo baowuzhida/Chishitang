@@ -132,7 +132,6 @@ public class OrderDetailAdapter extends BaseAdapter {
                             Toasty.info(mContext, "您还没写评价呢!", Toast.LENGTH_SHORT, true).show();
                             return;
                         }
-
                         android.app.AlertDialog alert = new android.app.AlertDialog.Builder(mContext).create();
                         alert.setTitle("操作提示");
                         alert.setMessage("您确定要这么评价吗？");

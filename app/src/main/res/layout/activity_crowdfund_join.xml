@@ -5,32 +5,111 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="菜品名称" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-    </LinearLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/clowfundjoin_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="395dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/crowdfund_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/crowdfund_name" />
+
+                <EditText
+                    android:id="@+id/crowdfund_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="@string/crowdfund_detail"
+                    android:minHeight="140dp"
+                    android:padding="10dp" />
+
+                <Spinner
+                    android:id="@+id/nice_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/linear_color" />
+
+                <EditText
+                    android:id="@+id/crowdfund_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/crowdfund_money"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/crowdfund_declaration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/crowdfund_declaration" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/image_gridview"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:background="@color/lightcyan"
+                android:columnWidth="90dp"
+                android:gravity="center"
+                android:horizontalSpacing="5dp"
+                android:numColumns="3"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp"
+                android:visibility="visible"
+                tools:ignore="NestedScrolling" />
+
+
+        </LinearLayout>
+    </ScrollView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="63dp" />
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/order_btn"
+        android:text="@string/back"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:background="@drawable/order_btn"
+        android:text="@string/btn_submit"
+        android:textColor="@color/white" />
+</LinearLayout>
+
 
 </LinearLayout>

@@ -53,7 +53,7 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
             //根据自定义的Item布局加载布局
             convertView = LayoutInflater.from(mContext).inflate(R.layout.crowdfund_list_item, parent, false);
             holder = new CrowdFundSupportAdapter.ViewHolder();
-            holder.imageView = (ImageButton) convertView.findViewById(R.id.crowdfund_roundedmage);
+            holder.imageView = (ImageButton) convertView.findViewById(R.id.crowdfund_roundedimage);
             holder.name = (TextView) convertView.findViewById(R.id.crowdfund_name);
             holder.declaration = (TextView) convertView.findViewById(R.id.crowdfund_declaration);
             holder.money = (TextView) convertView.findViewById(R.id.crowdfund_money);
@@ -69,8 +69,8 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
 
         String[] url=urlall.split("##");//以"##"为分隔符，截取上面的字符串。
 
-        for(int i=0;i<url.length;i++){
-            System.out.println(url[i]);//循环输出结果
+        for (String anUrl : url) {
+            System.out.println(anUrl);//循环输出结果
         }
 
         Glide.with(mContext)
@@ -78,6 +78,10 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
                 .placeholder(R.drawable.eat)
                 .crossFade()
                 .into(holder.imageView);
+
+        holder.name.setText(mData.get(position).getCrowdfund_name());
+        holder.declaration.setText(mData.get(position).getCrowdfund_declaration());
+        holder.money.setText("目前资金："+mData.get(position).getCrowdfund_capital()+"/"+mData.get(position).getCrowdfund_aimcapital());
 
         return convertView;
     }

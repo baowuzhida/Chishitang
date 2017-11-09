@@ -68,19 +68,29 @@ public class CrowdFundSupportActivity extends AppCompatActivity {
                     jsonArray = new JSONArray((String) msg.obj);
                     for(int i = 0;i < jsonArray.length();i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-//                        OrdersBean ordersBean=new OrdersBean();
-//                        ordersBean.setOrders_id(jsonObject.getInt("orders_id"));
-//                        ordersBean.setUser_id(jsonObject.getInt("user_id"));
-//                        ordersBean.setOrders_price(jsonObject.getDouble("orders_price"));
-//                        ordersBean.setOrders_time(jsonObject.getString("orders_time"));
-//                        linkedList.add(ordersBean);
+                        CrowdFundBean crowdFundBean=new CrowdFundBean();
+
+                        crowdFundBean.setCrowdfund_id(jsonObject.getInt("crowdfund_id"));
+                        crowdFundBean.setBuilder_id(jsonObject.getInt("builder_id"));
+                        crowdFundBean.setCrowdfund_image(jsonObject.getString("crowdfund_image"));
+                        crowdFundBean.setCrowdfund_name(jsonObject.getString("crowdfund_name"));
+                        crowdFundBean.setCrowdfund_detail(jsonObject.getString("crowdfund_detail"));
+                        crowdFundBean.setCrowdfund_declaration(jsonObject.getString("crowdfund_declaration"));
+                        crowdFundBean.setState(jsonObject.getInt("state"));
+                        crowdFundBean.setCrowdfund_capital(jsonObject.getDouble("crowdfund_capital"));
+                        crowdFundBean.setCrowdfund_aimcapital(jsonObject.getDouble("crowdfund_aimcapital"));
+                        crowdFundBean.setCrowdfund_supporters(jsonObject.getInt("crowdfund_supporters"));
+                        crowdFundBean.setCrowdfund_type(jsonObject.getInt("crowdfund_type"));
+
+                        linkedList.add(crowdFundBean);
                     }
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
-                Collections.reverse(linkedList);//订单倒序使得最新下单最先展示
+
+//                Collections.reverse(linkedList);//订单倒序使得最新下单最先展示
 
                 CrowdFundSupportAdapter crowdFundSupportAdapter=new CrowdFundSupportAdapter(linkedList,CrowdFundSupportActivity.this);
 

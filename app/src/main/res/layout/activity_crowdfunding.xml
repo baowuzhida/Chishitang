@@ -11,40 +11,43 @@
         android:background="?attr/colorPrimary"
         android:layout_width="match_parent" />
 
-    <Button
-        android:id="@+id/clowfunding_join"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/clowfunding_support"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!--<com.spark.submitbutton.SubmitButton-->
+    <!--<Button-->
         <!--android:id="@+id/clowfunding_join"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="我要参与"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="30sp"-->
-        <!--app:sub_btn_background="@color/b_red"-->
-        <!--app:sub_btn_duration="2000"-->
-        <!--app:sub_btn_line_color="@color/b_red"-->
-        <!--app:sub_btn_ripple_color="@color/b_red"-->
-        <!--app:sub_btn_tick_color="@color/white" />-->
+        <!--android:layout_height="wrap_content" />-->
 
-    <!--<com.spark.submitbutton.SubmitButton-->
+    <!--<Button-->
         <!--android:id="@+id/clowfunding_support"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="我要帮助"-->
-        <!--android:textSize="30sp"-->
-        <!--android:textColor="@color/white"-->
-        <!--app:sub_btn_background="@color/a_blue"-->
-        <!--app:sub_btn_duration="2000"-->
-        <!--app:sub_btn_line_color="@color/a_blue"-->
-        <!--app:sub_btn_ripple_color="@color/a_blue"-->
-        <!--app:sub_btn_tick_color="@color/white" />-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <com.spark.submitbutton.SubmitButton
+        android:id="@+id/clowfunding_join"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:text="我要参与"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:sub_btn_background="@color/b_red"
+        app:sub_btn_duration="2000"
+        app:sub_btn_line_color="@color/b_red"
+        app:sub_btn_ripple_color="@color/b_red"
+        app:sub_btn_tick_color="@color/white" />
+
+    <com.spark.submitbutton.SubmitButton
+        android:id="@+id/clowfunding_support"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:text="我要帮助"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        app:sub_btn_background="@color/a_blue"
+        app:sub_btn_duration="2000"
+        app:sub_btn_line_color="@color/a_blue"
+        app:sub_btn_ripple_color="@color/a_blue"
+        app:sub_btn_tick_color="@color/white" />
 
 </LinearLayout>

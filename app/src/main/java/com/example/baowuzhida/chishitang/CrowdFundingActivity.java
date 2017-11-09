@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.spark.submitbutton.SubmitButton;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 //import com.spark.submitbutton.SubmitButton;
 
@@ -14,7 +20,7 @@ import android.widget.ImageButton;
  */
 
 public class CrowdFundingActivity extends AppCompatActivity implements View.OnClickListener {
-//    private SubmitButton clowfunding_join,clowfunding_support;
+    private SubmitButton clowfunding_join,clowfunding_support;
     private Toolbar toolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +37,44 @@ public class CrowdFundingActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-//        clowfunding_join.setOnClickListener(this);
-//        clowfunding_support.setOnClickListener(this);
+        clowfunding_join.setOnClickListener(this);
+        clowfunding_support.setOnClickListener(this);
     }
 
     public void initView(){
         toolbar=(Toolbar)findViewById(R.id.clowfunding_toolbar);
-//        clowfunding_join=(SubmitButton)findViewById(R.id.clowfunding_join);
-//        clowfunding_support=(SubmitButton)findViewById(R.id.clowfunding_support);
+        clowfunding_join=(SubmitButton)findViewById(R.id.clowfunding_join);
+        clowfunding_support=(SubmitButton)findViewById(R.id.clowfunding_support);
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent;
         switch(v.getId()){
             case R.id.clowfunding_join:
-                intent = new Intent(CrowdFundingActivity.this, CrowdFundJoinActivity.class);
-                startActivity(intent);
+                TimerTask task1 = new TimerTask()
+                {
+                    public void run()
+                    {
+                        Intent intent = new Intent(CrowdFundingActivity.this, CrowdFundJoinActivity.class);
+                        startActivity(intent);
+                    }
+                };
+                Timer timer1 = new Timer();
+                timer1.schedule(task1, 200);
+
+
                 break;
             case R.id.clowfunding_support:
-                intent = new Intent(CrowdFundingActivity.this, CrowdFundSupportActivity.class);
-                startActivity(intent);
+                TimerTask task2 = new TimerTask()
+                {
+                    public void run()
+                    {
+                        Intent intent = new Intent(CrowdFundingActivity.this, CrowdFundSupportActivity.class);
+                        startActivity(intent);
+                    }
+                };
+                Timer timer2 = new Timer();
+                timer2.schedule(task2, 200);
                 break;
         }
     }

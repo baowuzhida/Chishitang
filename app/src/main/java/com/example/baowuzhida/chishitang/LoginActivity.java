@@ -115,8 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toasty.info(getApplicationContext(), "姓名不能为空", Toast.LENGTH_SHORT, true).show();
 //                    Toast.makeText(getApplicationContext(),"姓名不能为空",Toast.LENGTH_SHORT).show();
                     break;
-                }
-                if (TextUtils.isEmpty(psd)) {
+                }else if (TextUtils.isEmpty(psd)) {
                     Toasty.info(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT, true).show();
 //                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                     break;

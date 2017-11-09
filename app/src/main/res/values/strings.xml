@@ -66,7 +66,7 @@
     <string name="product_hint_product_details">菜品详情：</string>
     <string name="product_hint_addto_cart">加入购物车</string>
     <!--购物车-->
-    <string name="shoppingcar_hint_amount">总数： </string>
+    <string name="shoppingcar_hint_amount">总数：</string>
     <string name="shoppingcar_hint_settlement">结算(0)</string>
     <string name="shoppingcar_hint_edit">编辑</string>
     <string name="shoppingcar_hint_total">合计 0.00</string>
@@ -85,5 +85,11 @@
     <string name="user_change_email">更改邮箱</string>
     <string name="user_change_name">更改姓名</string>
     <string name="user_change_password">更改密码</string>
+    <!--众筹界面-->
+    <string name="crowdfund_name">请输入菜品名</string>
+    <string name="crowdfund_detail">请输入菜品详情</string>
+    <string name="crowdfund_money">请输入目标金额</string>
+    <string name="crowdfund_declaration">请输入宣言</string>
+    <string name="btn_submit">确认并上传</string>
 
 </resources>
