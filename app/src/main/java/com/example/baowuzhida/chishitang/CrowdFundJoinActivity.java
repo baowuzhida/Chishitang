@@ -23,6 +23,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -142,9 +143,9 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("crowdfund_name", crowdfund_name.getText().toString());
         jsonObject.put("crowdfund_detail", crowdfund_detail.getText().toString());
-        jsonObject.put("crowdfund_money", crowdfund_money.getText().toString());
+        jsonObject.put("crowdfund_aimcapital", crowdfund_money.getText().toString());
         jsonObject.put("crowdfund_declaration", crowdfund_declaration.getText().toString());
-        jsonObject.put("spinner_pos", pos);
+        jsonObject.put("crowdfund_type", pos+"");
 
         String crowdfund_message = jsonObject.toString();
         System.out.println(crowdfund_message+"                                      SSS");
@@ -171,23 +172,22 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
                         break;
                     default:
                         Toasty.success(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT, true).show();
+                        for (int i = 0; i < paths.size(); i++) {
+                            pathImage = paths.get(i);
+                            System.out.println(pathImage);
+
+                            if (pathImage != null && pathImage.length() > 0) {
+                                UploadFileTask uploadFileTask = new UploadFileTask(CrowdFundJoinActivity.this);
+                                uploadFileTask.execute(pathImage);
+                            }
+                        }
                         break;
                 }
             }
         };
 
-        for (int i = 0; i < paths.size(); i++) {
-            pathImage = paths.get(i);
-            System.out.println(pathImage);
-
-            if (pathImage != null && pathImage.length() > 0) {
-                UploadFileTask uploadFileTask = new UploadFileTask(CrowdFundJoinActivity.this);
-                uploadFileTask.execute(pathImage);
-            }
-        }
-
         HttpUtil httpUtil = new HttpUtil();
-        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/CrowdFundServlet",
+        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/CrowdfundServlet",
                 "type=message&crowdfund_message="+crowdfund_message,crowdfundhandler);
     }
 
@@ -241,6 +241,7 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
                             });
                     alert.show();
                 }
+                break;
             case R.id.btn_back:
                 finish();
         }
@@ -320,8 +321,7 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
             public void onClick(DialogInterface dialog, int which) {
                 if(which==0) {
                     //相册
-                    Intent intent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, IMAGE_OPEN);
 
                 }else if(which==1){
@@ -375,6 +375,7 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
                 if (uri != null) {
                     this.photo = BitmapFactory.decodeFile(uri.getPath()); // 拿到图片
                 }
+                Log.e("path","wrwerwerwerwerw"+photo);
                 if (photo == null) {
                     Bundle bundle = data.getExtras();
                     if (bundle != null) {
@@ -402,7 +403,9 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
                             this.photo.compress(Bitmap.CompressFormat.JPEG,
                                     100, fileOutputStream);
 // 相片的完整路径
-                            this.pathImage = file.getPath();
+                            pathImage = file.getPath();
+                            Log.e("path",pathImage);
+                            photo=null;
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {

@@ -6,8 +6,8 @@ android {
     defaultConfig {
         applicationId "com.example.baowuzhida.chishitang"
         targetSdkVersion 25
-        versionCode 8
-        versionName "1.58"
+        versionCode 9
+        versionName "1.59"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

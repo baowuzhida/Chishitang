@@ -58,7 +58,7 @@ public class CrowdFundSupportActivity extends AppCompatActivity {
 
     public void getList() {
 
-        Handler clowlisthandler=new Handler(){
+        Handler crowdlisthandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
@@ -98,7 +98,7 @@ public class CrowdFundSupportActivity extends AppCompatActivity {
             }
         };
         HttpUtil httpUtil = new HttpUtil();
-        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/ClowFundServlet","type=list",clowlisthandler);
+        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/CowrdfundServlet","type=list",crowdlisthandler);
 //        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/ClowFundServlet","clowname="+name+"clowimage="+image+"clowdetail="+detail+"clowdeclaration="+declaration+"&type=add",clowlisthandler);
     }
 }

@@ -20,6 +20,7 @@ public class UploadUtil {
     private static final String TAG = "uploadFile";
     private static final int TIME_OUT = 10*1000;   //超时时间
     private static final String CHARSET = "utf-8"; //设置编码
+    private static String cookie;
     public static final String SUCCESS="1";
     public static final String FAILURE="0";
     /**
@@ -33,10 +34,12 @@ public class UploadUtil {
         String  BOUNDARY =  UUID.randomUUID().toString();  //边界标识   随机生成
         String PREFIX = "--" , LINE_END = "\r\n";
         String CONTENT_TYPE = "multipart/form-data";   //内容类型
+        cookie=HttpUtil.getCookie();
 
         try {
             URL url = new URL(RequestURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Cookie", cookie);
             conn.setReadTimeout(TIME_OUT);
             conn.setConnectTimeout(TIME_OUT);
             conn.setDoInput(true);  //允许输入流

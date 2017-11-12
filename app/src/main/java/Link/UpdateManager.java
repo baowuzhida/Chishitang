@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.os.Environment;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import com.example.baowuzhida.chishitang.UpdateActivity;
 
@@ -64,23 +65,22 @@ public class UpdateManager {
 
     //获取服务器版本号
     public String getServerVersion(){
-        String serverJson = null;
-        byte[] buffer = new byte[128];
-
+        String serverJson = null;;
+        StringBuffer content=new StringBuffer();
         try {
             URL serverURL = new URL("http://119.23.205.112:8080/eatCanteen_war/appUpdate/ver.aspx");
             HttpURLConnection connect = (HttpURLConnection) serverURL.openConnection();
             connect.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
             BufferedInputStream bis = new BufferedInputStream(connect.getInputStream());
             BufferedReader br = new BufferedReader(new InputStreamReader(bis,"UTF-8"));
-            while(( br.readLine())!= null){
-                serverJson = new String(buffer);
+            while((serverJson= br.readLine())!= null){
+                content.append(serverJson);
             }
         } catch (Exception e) {
             System.out.println("获取服务器版本号异常！"+e);
         }
 
-        return serverJson;
+        return new String(content);
     }
 
     //比较服务器版本与本地版本弹出对话框
@@ -92,6 +92,7 @@ public class UpdateManager {
             public void run() {
                 Looper.prepare();
                 String serverJson = manager.getServerVersion();
+                Log.e("ban",serverJson);
 
                 //解析Json数据
                 try {

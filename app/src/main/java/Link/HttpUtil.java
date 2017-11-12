@@ -96,6 +96,10 @@ public class HttpUtil {
         }
     };
 
+    public static String getCookie(){
+        return cookie;
+    }
+
     private Runnable runnablePost=new Runnable() {
         @Override
         public void run() {

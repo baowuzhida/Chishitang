@@ -31,6 +31,7 @@ import java.util.List;
 
 import Bean.ProductBean;
 import Bean.ShoppingCartBean;
+import Interpolator_extends.ImageTextButton;
 import Link.CartDao;
 import Link.GlideImageLoader;
 
@@ -43,7 +44,6 @@ public class ProductMainAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private LinkedList<ProductBean> mData;
     private Context mContext;
-    private ImageView textProductImage;
     // 数据库操作类
     private CartDao cartDao;
 
@@ -78,10 +78,10 @@ public class ProductMainAdapter extends BaseAdapter {
             if(convertView==null){
                 convertView = inflater.inflate(R.layout.item_product_top, parent, false);
                 holder = new ViewHolder();
-                holder.product_all = (TextView)convertView.findViewById(R.id.product_all);
-                holder.product_special = (TextView)convertView.findViewById(R.id.product_special);
-                holder.product_vote = (TextView)convertView.findViewById(R.id.product_vote) ;
-                holder.product_fruit = (TextView)convertView.findViewById(R.id.product_fruit) ;
+                holder.product_all = (ImageTextButton)convertView.findViewById(R.id.product_all);
+                holder.product_special = (ImageTextButton)convertView.findViewById(R.id.product_special);
+                holder.product_vote = (ImageTextButton)convertView.findViewById(R.id.product_vote) ;
+                holder.product_fruit = (ImageTextButton)convertView.findViewById(R.id.product_fruit) ;
                 convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
@@ -104,6 +104,20 @@ public class ProductMainAdapter extends BaseAdapter {
             banner.setImages(images);
             //banner设置方法全部调用完毕时最后调用
             banner.start();
+
+            holder.product_all.setImgResource(R.mipmap.im_food_pudding);
+            holder.product_all.setText("所有美食");
+            holder.product_all.setTextColor(R.color.black);
+            holder.product_special.setImgResource(R.mipmap.im_food_tea);
+            holder.product_special.setText("特色美食");
+            holder.product_special.setTextColor(R.color.black);
+            holder.product_vote.setImgResource(R.mipmap.im_food_redwine);
+            holder.product_vote.setText("众筹美食");
+            holder.product_vote.setTextColor(R.color.black);
+            holder.product_vote.setImgResource(R.mipmap.im_food_coffee);
+            holder.product_vote.setText("瓜果生鲜");
+            holder.product_vote.setTextColor(R.color.black);
+
 
             holder.product_all.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -160,7 +174,7 @@ public class ProductMainAdapter extends BaseAdapter {
             final String address = mData.get(position-1).getProduct_address();
             final Integer productid = mData.get(position-1).getProduct_id();
 
-            textProductImage = (ImageButton) convertView.findViewById(R.id.productlist_product_imageview);
+            ImageView textProductImage = (ImageButton) convertView.findViewById(R.id.productlist_product_imageview);
 
             Glide.with(mContext)
                     .load(url)
@@ -213,7 +227,7 @@ public class ProductMainAdapter extends BaseAdapter {
         TextView textProductDetails;
         Button textAdd;
 
-        TextView product_all,product_special,product_vote,product_fruit;
+        ImageTextButton product_all,product_special,product_vote,product_fruit;
     }
 
     public int getItemViewType(int position) {

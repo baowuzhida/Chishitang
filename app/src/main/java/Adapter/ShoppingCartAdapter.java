@@ -24,7 +24,6 @@ import Bean.ShoppingCartBean;
 import Link.CartDao;
 
 import com.example.baowuzhida.chishitang.R;
-import com.example.baowuzhida.chishitang.ShoppingCartActivity;
 
 
 /**
@@ -117,7 +116,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 //        }
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.shoppingcar_list, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.shoppingcar_list_item, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
