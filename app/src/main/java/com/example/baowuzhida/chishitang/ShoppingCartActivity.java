@@ -14,11 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.google.zxing.common.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import Adapter.ShoppingCartAdapter;
 import Bean.BaseActivity;
@@ -26,6 +31,7 @@ import Bean.OrdersDetailsBean;
 import Bean.ShoppingCartBean;
 import Link.CartDao;
 import Link.HttpUtil;
+import Link.InitOssClient;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -78,24 +84,55 @@ public class ShoppingCartActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initData() {
-        ArrayList<ShoppingCartBean> cartBeanArrayList =null;
-        cartBeanArrayList = cartDao.dbQueryAll();
-        if(cartBeanArrayList.size()==0) {
-            Toast.makeText(ShoppingCartActivity.this,"购物车空空如也~", Toast.LENGTH_SHORT).show();
-        }else{
-            for (int i = 0; i < cartBeanArrayList.size(); i++) {
-                ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
-                shoppingCartBean.setProduct_id(cartBeanArrayList.get(i).getProduct_id());
-                shoppingCartBean.setShoppingName(cartBeanArrayList.get(i).getShoppingName());
-                shoppingCartBean.setImageUrl(cartBeanArrayList.get(i).getImageUrl());
-                shoppingCartBean.setDetail(cartBeanArrayList.get(i).getDetail());
-                shoppingCartBean.setAddress(cartBeanArrayList.get(i).getAddress());
-                shoppingCartBean.setPrice(cartBeanArrayList.get(i).getPrice());
-                shoppingCartBean.setCount(cartBeanArrayList.get(i).getCount());
-                shoppingCartBeanList.add(shoppingCartBean);
-            }
-        }
 
+        Handler handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if(msg.obj==null){
+                    return;
+                }
+                String ss=(String)msg.obj;
+                String[] Data = ss.split("##");
+
+                ArrayList<ShoppingCartBean> cartBeanArrayList =null;
+                cartBeanArrayList = cartDao.dbQueryAll();
+                if(cartBeanArrayList.size()==0) {
+                    Toast.makeText(ShoppingCartActivity.this,"购物车空空如也~", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    for (int i = 0; i < cartBeanArrayList.size(); i++) {
+                        ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
+                        shoppingCartBean.setProduct_id(cartBeanArrayList.get(i).getProduct_id());
+                        shoppingCartBean.setShoppingName(cartBeanArrayList.get(i).getShoppingName());
+
+//                        StringTokenizer st = new StringTokenizer(cartBeanArrayList.get(i).getImageUrl(), "?");
+//                        String[] address = st.nextToken().split("/");
+                        final InitOssClient initOssClient = new InitOssClient();
+                        String url= null;
+                        OSS oss = initOssClient.getOss(getApplicationContext(),Data[0],Data[1],Data[2]);
+                        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        String obk = cartBeanArrayList.get(i).getImageUrl();
+
+                        try {
+                            url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                        } catch (ClientException e) {
+                            e.printStackTrace();
+                        }
+
+                        shoppingCartBean.setImageUrl(url);
+                        shoppingCartBean.setDetail(cartBeanArrayList.get(i).getDetail());
+                        shoppingCartBean.setAddress(cartBeanArrayList.get(i).getAddress());
+                        shoppingCartBean.setPrice(cartBeanArrayList.get(i).getPrice());
+                        shoppingCartBean.setCount(cartBeanArrayList.get(i).getCount());
+                        shoppingCartBeanList.add(shoppingCartBean);
+                        shoppingCartAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        };
+        HttpUtil httpUtil = new HttpUtil();
+        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/KeyServlet","",handler);
     }
 
     @Override
@@ -140,7 +177,7 @@ public class ShoppingCartActivity extends BaseActivity implements View.OnClickLi
                 }
 
 
-                    tv_settlement.setOnClickListener(new View.OnClickListener() {
+                tv_settlement.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         final ArrayList<OrdersDetailsBean> a = new ArrayList<>();

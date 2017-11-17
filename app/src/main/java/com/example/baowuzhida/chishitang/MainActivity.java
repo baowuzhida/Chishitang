@@ -1,5 +1,6 @@
 package com.example.baowuzhida.chishitang;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,9 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -32,12 +30,13 @@ import android.widget.Toast;
 import Adapter.OrdersAdapter;
 import Adapter.ProductMainAdapter;
 import Bean.ProductBean;
+
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.jude.rollviewpager.RollPagerView;
 import com.zqg.dialogviewpager.StepDialog;
-//import com.zqg.dialogviewpager.StepDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,6 +48,7 @@ import java.util.LinkedList;
 
 import Bean.OrdersBean;
 import Link.HttpUtil;
+import Link.InitOssClient;
 import Link.SharedPrefsCookieUtil;
 import es.dmoral.toasty.Toasty;
 
@@ -67,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
     private HttpUtil httpUtil;
     private FloatingActionMenu fab;
 
-
-
+    private Handler osshandler;
+    private String AccessKeyId,SecretKeyId,SecurityToken;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        public boolean onNavigationItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     controlProduct();
@@ -116,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        initKey();
+        initView();
+
         SharedPreferences pref = this.getSharedPreferences("ifFirstUse" , MODE_PRIVATE);
         if(pref.getString("iffirstuse",null) == null){
             //id为空，用户是首次使用应用
@@ -128,10 +131,19 @@ public class MainActivity extends AppCompatActivity {
             mEditor.apply();
         }
 
-
         SharedPrefsCookieUtil scookie=new SharedPrefsCookieUtil(this);
         httpUtil = new HttpUtil(scookie);
 
+        contralToolbar();
+        relogin();//判断本地是否登录 如果登陆向服务端发送一次请求
+        contralFab();
+        controlProduct();
+        //
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+    //initview
+    private void initView(){
         toolbar = (Toolbar)findViewById(R.id.Toolbar);
         orderView=findViewById(R.id.main_order);
         productView=findViewById(R.id.main_products);
@@ -140,14 +152,6 @@ public class MainActivity extends AppCompatActivity {
         show_login = (TextView)findViewById(R.id.order_show_login);
         orderswipe = (SwipeRefreshLayout)findViewById(R.id.order_swipe);
         productswipe = (SwipeRefreshLayout)findViewById(R.id.product_swipe);
-
-        contralToolbar();
-        relogin();//判断本地是否登录 如果登陆向服务端发送一次请求
-        contralFab();
-        productRefresh(productswipe);
-        //
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
     //Fab信息
     public void contralFab(){
@@ -234,21 +238,41 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
         String username=sharedPre.getString("username", "");
-        String userimage=sharedPre.getString("userimage", "");
+        final String userimage=sharedPre.getString("userimage", "");
         if(username.equals("")){
             IfLogin.setText("未登录");
             btn_logout.setVisibility(View.GONE);
         }
         else {
             IfLogin.setText(" 欢迎用户 "+username+" 登录");
-
-            Glide.with(this)
-                    .load(userimage)
-                    .placeholder(R.drawable.eat)
-                    .crossFade()
-                    .into(RoundedImage);
-            btn_logout.setVisibility(View.VISIBLE);
-
+            Handler keyhandler=new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    if(msg.obj==null){
+                        return;
+                    }
+                    JSONArray jsonArray;
+                    String ss=(String)msg.obj;
+                    String[] Data = ss.split("##");
+                    final InitOssClient initOssClient = new InitOssClient();
+                    String url= null;
+                    OSS oss = initOssClient.getOss(getApplicationContext(),Data[0],Data[1],Data[2]);
+                    try {
+                        url = oss.presignConstrainedObjectURL("chishitang",userimage,1000);
+                    } catch (ClientException e) {
+                        e.printStackTrace();
+                    }
+                    Glide.with(getApplicationContext())
+                            .load(url)
+                            .placeholder(R.drawable.eat)
+                            .crossFade()
+                            .into(RoundedImage);
+                    btn_logout.setVisibility(View.VISIBLE);
+                }
+            };
+            HttpUtil httpUtil = new HttpUtil();
+            httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/KeyServlet","",keyhandler);
         }
         IfLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }else{
                     Toasty.warning(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT, true).show();
-//                    Toast.makeText(getApplicationContext(), "尚未登陆", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -343,15 +366,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (type) {
                     case "no":
                         Toasty.error(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT, true).show();
-//                        Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
                         break;
                     case "connfail":
                         Toasty.error(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT, true).show();
-//                        Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         Toasty.success(getApplicationContext(), "欢迎回来 "+ username, Toast.LENGTH_SHORT, true).show();
-//                        Toast.makeText(getApplicationContext(), "欢迎回来 " + username, Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -430,6 +450,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                if(msg.obj==null){
+                    return;
+                }
                 final LinkedList<OrdersBean> linkedList=new LinkedList<>();
                 JSONArray jsonArray;
                 try {
@@ -487,16 +510,20 @@ public class MainActivity extends AppCompatActivity {
     }
     //刷新产品基于controlProduct
     private void productRefresh(final SwipeRefreshLayout productswipe){
-
         product_listview = (ListView)findViewById(R.id.product_listview);
         Handler productlisthandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                if(msg.obj==null){
+                    return;
+                }
                 LinkedList linkedList=new LinkedList();
                 JSONArray jsonArray;
+                String ss=(String)msg.obj;
+                String[] Data = ss.split("##");
                 try {
-                    jsonArray = new JSONArray((String) msg.obj);
+                    jsonArray = new JSONArray(Data[0]);
                     for(int i = 0;i < jsonArray.length();i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         ProductBean productBean=new ProductBean();
@@ -504,7 +531,18 @@ public class MainActivity extends AppCompatActivity {
                         productBean.setProduct_name(jsonObject.getString("product_name"));
                         productBean.setProduct_details(jsonObject.getString("product_details"));
                         productBean.setProduct_address(jsonObject.getString("product_address"));
-                        productBean.setProduct_image(jsonObject.getString("product_image"));
+
+                        final InitOssClient initOssClient = new InitOssClient();
+                        String url= null;
+                        OSS oss = initOssClient.getOss(getApplicationContext(),Data[1],Data[2],Data[3]);
+                        String obk = jsonObject.getString("product_image");
+                        try {
+                            url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                        } catch (ClientException e) {
+                            e.printStackTrace();
+                        }
+                        productBean.setProduct_imgaddress(jsonObject.getString("product_image"));
+                        productBean.setProduct_image(url);
                         productBean.setProduct_type(jsonObject.getInt("product_type"));
                         productBean.setProduct_price(jsonObject.getDouble("product_price"));
                         linkedList.add(productBean);
@@ -514,11 +552,9 @@ public class MainActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-
                 ProductMainAdapter productMainAdapter=new ProductMainAdapter((LinkedList<ProductBean>)linkedList,MainActivity.this);
                 product_listview.setAdapter(productMainAdapter);
                 productswipe.setRefreshing(false);
-
             }
         };
         HttpUtil httpUtil = new HttpUtil();
@@ -537,6 +573,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent;
             switch (position){
                 case 0:
+                    intent = new Intent(MainActivity.this, HobbyActivity.class);
+                    startActivity(intent);
                     break;
                 case 1:
                     intent = new Intent(MainActivity.this, VoteActivity.class);
@@ -556,25 +594,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "点击"+item.get("ItemText"), Toast.LENGTH_SHORT).show();
         }
     }
-    //首页轮播
-//    public void rollpagerview(){
-//        product_pager = (RollPagerView) findViewById(R.id.roll_view_pager);
-//        //设置播放时间间隔
-//        product_pager.setPlayDelay(2000);
-//        //设置透明度
-//        product_pager.setAnimationDurtion(500);
-//        //设置适配器
-//        product_pager.setAdapter(new RollpagerviewAdapter());
-//
-//        //设置指示器（顺序依次）
-//        //自定义指示器图片
-//        //设置圆点指示器颜色
-//        //设置文字指示器
-//        //隐藏指示器
-//        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
-//        product_pager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
-//        //mRollViewPager.setHintView(new TextHintView(this));
-//        //mRollViewPager.setHintView(null);
-//    }
 }
 

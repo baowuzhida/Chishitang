@@ -3,6 +3,9 @@ package Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.bumptech.glide.Glide;
 import com.example.baowuzhida.chishitang.ProductAllActivity;
 import com.example.baowuzhida.chishitang.ProductdetailActivity;
@@ -24,6 +30,7 @@ import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -46,6 +53,8 @@ public class ProductMainAdapter extends BaseAdapter {
     private Context mContext;
     // 数据库操作类
     private CartDao cartDao;
+
+    private Handler osshandler;
 
 
     public ProductMainAdapter(LinkedList<ProductBean> mData, Context mContext) {
@@ -88,9 +97,11 @@ public class ProductMainAdapter extends BaseAdapter {
             }
 
             List<String> images = new ArrayList<>();
+
             images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509040205440&di=22193b1c9af83a006eb4b01a707a0ace&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Faa64034f78f0f7366c7c53f70055b319eac41341.jpg");
             images.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=820816834,1560862863&fm=200&gp=0.jpg");
             images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509040205441&di=dc9f06e2586dacee5ca5274a19e5e9b9&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fphotoblog%2F1406%2F20%2Fc2%2F35487604_1403249143274.jpg");
+//            images.add(url);
             Banner banner = (Banner)convertView.findViewById(R.id.banner_view_pager);
             banner.setOnBannerListener(new OnBannerListener() {
                 @Override
@@ -114,9 +125,9 @@ public class ProductMainAdapter extends BaseAdapter {
             holder.product_vote.setImgResource(R.mipmap.im_food_redwine);
             holder.product_vote.setText("众筹美食");
             holder.product_vote.setTextColor(R.color.black);
-            holder.product_vote.setImgResource(R.mipmap.im_food_coffee);
-            holder.product_vote.setText("瓜果生鲜");
-            holder.product_vote.setTextColor(R.color.black);
+            holder.product_fruit.setImgResource(R.mipmap.im_food_coffee);
+            holder.product_fruit.setText("瓜果生鲜");
+            holder.product_fruit.setTextColor(R.color.black);
 
 
             holder.product_all.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +147,6 @@ public class ProductMainAdapter extends BaseAdapter {
                     intent.putExtra("page", 1);
                     intent.setClass(mContext, ProductAllActivity.class);
                     mContext.startActivity(intent);
-//                    Toast.makeText(mContext, "查看特色菜品 ", Toast.LENGTH_SHORT).show();
                 }
             });
             holder.product_vote.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +156,6 @@ public class ProductMainAdapter extends BaseAdapter {
                     intent.putExtra("page", 2);
                     intent.setClass(mContext, ProductAllActivity.class);
                     mContext.startActivity(intent);
-//                    Toast.makeText(mContext, "查看众筹菜品 ", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -166,13 +175,13 @@ public class ProductMainAdapter extends BaseAdapter {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-
             final String url = mData.get(position-1).getProduct_image();
             final String name = mData.get(position-1).getProduct_name();
             final Double price = mData.get(position-1).getProduct_price();
             final String details = mData.get(position-1).getProduct_details();
             final String address = mData.get(position-1).getProduct_address();
             final Integer productid = mData.get(position-1).getProduct_id();
+            final String imgaddress  = mData.get(position-1).getProduct_imgaddress();
 
             ImageView textProductImage = (ImageButton) convertView.findViewById(R.id.productlist_product_imageview);
 
@@ -195,7 +204,7 @@ public class ProductMainAdapter extends BaseAdapter {
                         int count = shoppingCartBean.getCount();
                         cartDao.dbUpdateCart(productid, count + 1);
                     } else {
-                        cartDao.dbInsert(productid, url, name, details, address, price, 1);
+                        cartDao.dbInsert(productid, imgaddress, name, details, address, price, 1);
                     }
                     Toast.makeText(mContext, "添加菜品 " + name, Toast.LENGTH_SHORT).show();
 
@@ -244,5 +253,6 @@ public class ProductMainAdapter extends BaseAdapter {
         this.mData = mData;
         notifyDataSetChanged();
     }
+
 
 }

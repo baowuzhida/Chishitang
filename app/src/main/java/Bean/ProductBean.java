@@ -8,13 +8,30 @@ public class ProductBean {
     private int product_id;
     private String product_name;
     private String product_details;
-    private String product_image;
+    private String product_image,product_imgaddress;
     private String product_address;
     private double product_price;
     private int product_type;
+    private int amount;
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
     public ProductBean() {
         super();
+    }
+
+    public String getProduct_imgaddress() {
+        return product_imgaddress;
+    }
+
+    public void setProduct_imgaddress(String product_imgaddress) {
+        this.product_imgaddress = product_imgaddress;
     }
 
     @Override

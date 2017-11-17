@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,6 +22,7 @@ import Adapter.OrderDetailAdapter;
 import Bean.OrdersDetailsBean;
 import Bean.ProductBean;
 import Link.HttpUtil;
+import Link.InitOssClient;
 
 
 /**
@@ -64,8 +68,10 @@ public class OrderDetailActivity extends AppCompatActivity{
                 super.handleMessage(msg);
                 LinkedList linkedList=new LinkedList();
                 JSONArray jsonArray;
+                String ss=(String)msg.obj;
+                String[] Data = ss.split("##");
                 try {
-                    jsonArray = new JSONArray((String) msg.obj);
+                    jsonArray = new JSONArray(Data[0]);
                     for(int i = 0;i < jsonArray.length();i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         OrdersDetailsBean ordersDetailsBean=new OrdersDetailsBean();
@@ -77,7 +83,18 @@ public class OrderDetailActivity extends AppCompatActivity{
                         productBean.setProduct_id(json.getInt("product_id"));
                         productBean.setProduct_name(json.getString("product_name"));
                         productBean.setProduct_details(json.getString("product_details"));
-                        productBean.setProduct_image(json.getString("product_image"));
+
+                        final InitOssClient initOssClient = new InitOssClient();
+                        String url= null;
+                        OSS oss = initOssClient.getOss(getApplicationContext(),Data[1],Data[2],Data[3]);
+                        String obk = json.getString("product_image");
+                        try {
+                            url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                        } catch (ClientException e) {
+                            e.printStackTrace();
+                        }
+
+                        productBean.setProduct_image(url);
                         productBean.setProduct_price(json.getDouble("product_price"));
                         productBean.setProduct_type(json.getInt("product_type"));
                         productBean.setProduct_address(json.getString("product_address"));

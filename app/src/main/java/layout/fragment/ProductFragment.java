@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import Adapter.ProductAllAdapter;
+
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
 import com.example.baowuzhida.chishitang.R;
 
 import org.json.JSONArray;
@@ -19,6 +22,7 @@ import java.util.LinkedList;
 
 import Bean.ProductBean;
 import Link.HttpUtil;
+import Link.InitOssClient;
 
 
 public class ProductFragment extends android.support.v4.app.Fragment {
@@ -59,8 +63,10 @@ public class ProductFragment extends android.support.v4.app.Fragment {
                 super.handleMessage(msg);
                 LinkedList linkedList=new LinkedList();
                 JSONArray jsonArray;
+                String ss=(String)msg.obj;
+                String[] Data = ss.split("##");
                 try {
-                    jsonArray = new JSONArray((String) msg.obj);
+                    jsonArray = new JSONArray(Data[0]);
                     for(int i = 0;i < jsonArray.length();i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         ProductBean productBean=new ProductBean();
@@ -68,7 +74,18 @@ public class ProductFragment extends android.support.v4.app.Fragment {
                         productBean.setProduct_name(jsonObject.getString("product_name"));
                         productBean.setProduct_details(jsonObject.getString("product_details"));
                         productBean.setProduct_address(jsonObject.getString("product_address"));
-                        productBean.setProduct_image(jsonObject.getString("product_image"));
+
+                        final InitOssClient initOssClient = new InitOssClient();
+                        String url= null;
+                        OSS oss = initOssClient.getOss(getContext(),Data[1],Data[2],Data[3]);
+                        String obk = jsonObject.getString("product_image");
+                        try {
+                            url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                        } catch (ClientException e) {
+                            e.printStackTrace();
+                        }
+
+                        productBean.setProduct_image(url);
                         productBean.setProduct_type(jsonObject.getInt("product_type"));
                         productBean.setProduct_price(jsonObject.getDouble("product_price"));
                         linkedList.add(productBean);

@@ -111,7 +111,7 @@ public class ProductdetailActivity extends AppCompatActivity implements View.OnC
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
-                if (msg == null) {
+                if (msg.obj == null) {
                     return;
                 }
                 LinkedList<UserEvaluateBean> linkedList=new LinkedList<>();

@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.baowuzhida.chishitang.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import Bean.CrowdFundBean;
 
@@ -32,6 +35,7 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
+
         return mData.size();
     }
 
@@ -53,7 +57,7 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
             //根据自定义的Item布局加载布局
             convertView = LayoutInflater.from(mContext).inflate(R.layout.crowdfund_list_item, parent, false);
             holder = new CrowdFundSupportAdapter.ViewHolder();
-            holder.imageView = (ImageButton) convertView.findViewById(R.id.crowdfund_roundedimage);
+            holder.imageView = (RoundedImageView) convertView.findViewById(R.id.crowdfund_roundedimage);
             holder.name = (TextView) convertView.findViewById(R.id.crowdfund_name);
             holder.declaration = (TextView) convertView.findViewById(R.id.crowdfund_declaration);
             holder.money = (TextView) convertView.findViewById(R.id.crowdfund_money);
@@ -67,7 +71,7 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
         }
         final String urlall = mData.get(position).getCrowdfund_image();
 
-        String[] url=urlall.split("##");//以"##"为分隔符，截取上面的字符串。
+        String[] url = urlall.split("##");//以"##"为分隔符，截取上面的字符串。
 
         for (String anUrl : url) {
             System.out.println(anUrl);//循环输出结果
@@ -81,16 +85,16 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
 
         holder.name.setText(mData.get(position).getCrowdfund_name());
         holder.declaration.setText(mData.get(position).getCrowdfund_declaration());
-        holder.money.setText("目前资金："+mData.get(position).getCrowdfund_capital()+"/"+mData.get(position).getCrowdfund_aimcapital());
-
+        holder.money.setText("目前资金：" + mData.get(position).getCrowdfund_capital() + "/" + mData.get(position).getCrowdfund_aimcapital());
         return convertView;
     }
 
     private static class ViewHolder {
-        ImageView imageView;
+        RoundedImageView imageView;
         TextView name;
         TextView declaration;
         TextView money;
+        TextView text1;
         Button btn_detail;
         ImageView btn_share,btn_message,btn_admire;
     }

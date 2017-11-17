@@ -8,29 +8,31 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 
 
 public class UploadFileTask extends AsyncTask<String, Void, String> {
+
     public static final String requestURL = "http://119.23.205.112:8080/eatCanteen_war/ImageServlet";
     /**
      * 可变长的输入参数，与AsyncTask.exucute()对应
      */
-    private ProgressDialog pdialog;
     private AppCompatActivity context = null;
 
     public UploadFileTask(AppCompatActivity ctx) {
         this.context = ctx;
-        pdialog = ProgressDialog.show(context, "正在加载...", "系统正在处理您的请求");
+
     }
 
     @Override
     protected void onPostExecute(String result) {
         // 返回HTML页面的内容
-        pdialog.dismiss();
+
         if (UploadUtil.SUCCESS.equalsIgnoreCase(result)) {
-            Toast.makeText(context, "上传成功!", Toast.LENGTH_SHORT).show();
+            Toasty.success(context, "上传成功", Toast.LENGTH_SHORT, true).show();
+            context.finish();
         } else {
-            Toast.makeText(context, "上传失败!", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "上传失败", Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -53,4 +55,4 @@ public class UploadFileTask extends AsyncTask<String, Void, String> {
     protected void onProgressUpdate(Void... values) {
     }
 
-}
+ }

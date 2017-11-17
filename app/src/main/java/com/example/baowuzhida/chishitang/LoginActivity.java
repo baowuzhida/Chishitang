@@ -113,18 +113,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 psd = login_input_password.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     Toasty.info(getApplicationContext(), "姓名不能为空", Toast.LENGTH_SHORT, true).show();
-//                    Toast.makeText(getApplicationContext(),"姓名不能为空",Toast.LENGTH_SHORT).show();
                     break;
                 }else if (TextUtils.isEmpty(psd)) {
                     Toasty.info(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT, true).show();
-//                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                     break;
                 }
-                mWidth = login_login.getMeasuredWidth();
-                mHeight = login_login.getMeasuredHeight();
+                mWidth = mInputLayout.getMeasuredWidth();
+                mHeight = mInputLayout.getMeasuredHeight();
                 // 隐藏输入框
-                login_input_username.setVisibility(View.INVISIBLE);
-                login_input_password.setVisibility(View.INVISIBLE);
+//                login_input_username.setVisibility(View.INVISIBLE);
+//                login_input_password.setVisibility(View.INVISIBLE);
+                mInputLayout.setVisibility(View.GONE);
                 inputAnimator(mInputLayout, mWidth, mHeight);
 
                 Login(name,psd);
@@ -177,15 +176,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             switch (type) {
                 case "no":
                     Toasty.error(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT, true).show();
-//                    Toast.makeText(getApplicationContext(), "账号或密码错误", Toast.LENGTH_SHORT).show();
-                    progress.setVisibility(View.GONE);
-                    mInputLayout.setVisibility(View.VISIBLE);
+                    Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent1);
+                    finish();
                     break;
                 case "connfail":
                     Toasty.error(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT, true).show();
-//                    Toast.makeText(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT).show();
-                    progress.setVisibility(View.GONE);
-                    mInputLayout.setVisibility(View.VISIBLE);
+                    Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent2);
+                    finish();
                     break;
                 default:
                     UserBean userBean=new UserBean();

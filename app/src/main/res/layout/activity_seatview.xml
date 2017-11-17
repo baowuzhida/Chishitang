@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -10,10 +12,54 @@
         android:background="?attr/colorPrimary"
         android:layout_width="match_parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/seat_text_view"
+        android:orientation="horizontal"
+        android:screenOrientation="landscape">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="选择地址"
+
+            />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#ffffff"
+            android:contentDescription="@string/app_name" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/ctype2" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#ffffff"
+            android:contentDescription="@string/app_name" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/ctype" />
+
+    </LinearLayout>
+
     <ImageView
+        android:id="@+id/restaurant_seatview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/seat"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:contentDescription="@string/app_name" />
+
 
 </LinearLayout>

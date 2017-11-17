@@ -18,20 +18,6 @@ public class CrowdFundBean {
     private int crowdfund_type;//菜品类型 0 主食 1 小菜 2 略。。。
     private int crowdfund_supporters;//支持人数 默认0 一个赞助加一个
 
-//    public CrowdFundBean(int crowdfund_id, int builder_id, String crowdfund_image, String crowdfund_name, String crowdfund_detail, String crowdfund_declaration, int state, double crowdfund_capital, double crowdfund_aimcapital, int crowdfund_type, int crowdfund_supporters) {
-//        this.crowdfund_id = crowdfund_id;
-//        this.builder_id = builder_id;
-//        this.crowdfund_image = crowdfund_image;
-//        this.crowdfund_name = crowdfund_name;
-//        this.crowdfund_detail = crowdfund_detail;
-//        this.crowdfund_declaration = crowdfund_declaration;
-//        this.state = state;
-//        this.crowdfund_capital = crowdfund_capital;
-//        this.crowdfund_aimcapital = crowdfund_aimcapital;
-//        this.crowdfund_type = crowdfund_type;
-//        this.crowdfund_supporters = crowdfund_supporters;
-//    }
-
     public int getCrowdfund_id() {
         return crowdfund_id;
     }

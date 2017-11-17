@@ -13,6 +13,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,6 +26,7 @@ import java.util.List;
 import Adapter.ProductAllAdapter;
 import Bean.ProductBean;
 import Link.HttpUtil;
+import Link.InitOssClient;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -116,8 +120,10 @@ public class SearchActivity extends Activity {
                         super.handleMessage(msg);
                         LinkedList linkedList=new LinkedList();
                         JSONArray jsonArray;
+                        String ss=(String)msg.obj;
+                        String[] Data = ss.split("##");
                         try {
-                            jsonArray = new JSONArray((String) msg.obj);
+                            jsonArray = new JSONArray(Data[0]);
                             for(int i = 0;i < jsonArray.length();i++) {
                                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                                 ProductBean productBean=new ProductBean();
@@ -125,7 +131,18 @@ public class SearchActivity extends Activity {
                                 productBean.setProduct_name(jsonObject.getString("product_name"));
                                 productBean.setProduct_details(jsonObject.getString("product_details"));
                                 productBean.setProduct_address(jsonObject.getString("product_address"));
-                                productBean.setProduct_image(jsonObject.getString("product_image"));
+
+                                final InitOssClient initOssClient = new InitOssClient();
+                                String url= null;
+                                OSS oss = initOssClient.getOss(getApplicationContext(),Data[1],Data[2],Data[3]);
+                                String obk = jsonObject.getString("product_image");
+                                try {
+                                    url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                                } catch (ClientException e) {
+                                    e.printStackTrace();
+                                }
+
+                                productBean.setProduct_image(url);
                                 productBean.setProduct_type(jsonObject.getInt("product_type"));
                                 productBean.setProduct_price(jsonObject.getDouble("product_price"));
                                 linkedList.add(productBean);
@@ -154,7 +171,6 @@ public class SearchActivity extends Activity {
                 return false;
             }
         });
-
     }
 
     public void translateMessage(String message){

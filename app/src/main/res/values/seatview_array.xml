@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ctype">
+        <item>选择食堂</item>
+        <item>一食堂</item>
+        <item>二食堂</item>
+        <item>齐大厨</item>
+
+    </string-array>
+    <string-array name="ctype2">
+        <item>选择学校</item>
+        <item>宜春学院</item>
+        <item>宜春学院北校区</item>
+        <item>宜春职业技术学院</item>
+
+    </string-array>
+</resources>

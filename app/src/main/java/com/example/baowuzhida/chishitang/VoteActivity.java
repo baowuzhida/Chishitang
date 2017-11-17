@@ -14,6 +14,9 @@ import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,6 +26,7 @@ import Adapter.VoteAdapter;
 import Bean.FavoriteProduct;
 import Bean.ProductBean;
 import Link.HttpUtil;
+import Link.InitOssClient;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -69,13 +73,18 @@ public class VoteActivity extends AppCompatActivity {
                     @Override
                     public void handleMessage(Message msg) {
                         super.handleMessage(msg);
+                        if(msg.obj==null){
+                            return;
+                        }
                         String type=(String)msg.obj;
+                        String ss=(String)msg.obj;
+                        String[] Data = ss.split("##");
                         if(type.equals("no"))
                             Toasty.info(getApplicationContext(), "未搜索到"+query, Toast.LENGTH_SHORT, true).show();
                         else
                         {
                             try {
-                                JSONObject jsonObject = new JSONObject(type);
+                                JSONObject jsonObject = new JSONObject(Data[0]);
                                 FavoriteProduct favoriteProduct=new FavoriteProduct();
                                 favoriteProduct.setFproduct_id(jsonObject.getInt("fproduct_id"));
                                 favoriteProduct.setNumber_votes(jsonObject.getInt("number_votes"));
@@ -86,7 +95,18 @@ public class VoteActivity extends AppCompatActivity {
                                 productBean.setProduct_id(json.getInt("product_id"));
                                 productBean.setProduct_name(json.getString("product_name"));
                                 productBean.setProduct_details(json.getString("product_details"));
-                                productBean.setProduct_image(json.getString("product_image"));
+
+                                final InitOssClient initOssClient = new InitOssClient();
+                                String url= null;
+                                OSS oss = initOssClient.getOss(getApplicationContext(),Data[1],Data[2],Data[3]);
+                                String obk = json.getString("product_image");
+                                try {
+                                    url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                                } catch (ClientException e) {
+                                    e.printStackTrace();
+                                }
+
+                                productBean.setProduct_image(url);
                                 productBean.setProduct_price(json.getDouble("product_price"));
                                 productBean.setProduct_type(json.getInt("product_type"));
                                 productBean.setProduct_address(json.getString("product_address"));
@@ -141,14 +161,17 @@ public class VoteActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                if(msg ==null){
+                if(msg.obj ==null){
                     Toast.makeText(getApplicationContext(),"连接超时",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String ss=(String)msg.obj;
+                String[] Data = ss.split("##");
+
                 linkedList=new LinkedList<>();
                 JSONArray jsonArray;
                 try {
-                    jsonArray = new JSONArray((String) msg.obj);
+                    jsonArray = new JSONArray(Data[0]);
                     for(int i = 0;i < jsonArray.length();i++) {
                         JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                         FavoriteProduct favoriteProduct=new FavoriteProduct();
@@ -161,7 +184,18 @@ public class VoteActivity extends AppCompatActivity {
                         productBean.setProduct_id(json.getInt("product_id"));
                         productBean.setProduct_name(json.getString("product_name"));
                         productBean.setProduct_details(json.getString("product_details"));
-                        productBean.setProduct_image(json.getString("product_image"));
+
+                        final InitOssClient initOssClient = new InitOssClient();
+                        String url= null;
+                        OSS oss = initOssClient.getOss(getApplicationContext(),Data[1],Data[2],Data[3]);
+                        String obk = json.getString("product_image");
+                        try {
+                            url = oss.presignConstrainedObjectURL("chishitang",obk,1000);
+                        } catch (ClientException e) {
+                            e.printStackTrace();
+                        }
+
+                        productBean.setProduct_image(url);
                         productBean.setProduct_price(json.getDouble("product_price"));
                         productBean.setProduct_type(json.getInt("product_type"));
                         productBean.setProduct_address(json.getString("product_address"));

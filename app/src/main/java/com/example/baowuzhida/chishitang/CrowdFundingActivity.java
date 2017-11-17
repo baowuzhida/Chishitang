@@ -42,7 +42,7 @@ public class CrowdFundingActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void initView(){
-        toolbar=(Toolbar)findViewById(R.id.clowfunding_toolbar);
+        toolbar=(Toolbar)findViewById(R.id.crowdfunding_toolbar);
         clowfunding_join=(SubmitButton)findViewById(R.id.clowfunding_join);
         clowfunding_support=(SubmitButton)findViewById(R.id.clowfunding_support);
     }
