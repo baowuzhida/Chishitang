@@ -57,9 +57,10 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
             //根据自定义的Item布局加载布局
             convertView = LayoutInflater.from(mContext).inflate(R.layout.crowdfund_list_item, parent, false);
             holder = new CrowdFundSupportAdapter.ViewHolder();
-            holder.imageView = (RoundedImageView) convertView.findViewById(R.id.crowdfund_roundedimage);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.crowdfund_dimage);
             holder.name = (TextView) convertView.findViewById(R.id.crowdfund_name);
             holder.declaration = (TextView) convertView.findViewById(R.id.crowdfund_declaration);
+            holder.support=(TextView)convertView.findViewById(R.id.crowdfund_supporters);
             holder.money = (TextView) convertView.findViewById(R.id.crowdfund_money);
             holder.btn_detail = (Button) convertView.findViewById(R.id.btn_detail);
             holder.btn_share = (ImageView) convertView.findViewById(R.id.btn_share);
@@ -82,7 +83,7 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
                 .placeholder(R.drawable.eat)
                 .crossFade()
                 .into(holder.imageView);
-
+        holder.support.setText("支持人数："+mData.get(position).getCrowdfund_supporters());
         holder.name.setText(mData.get(position).getCrowdfund_name());
         holder.declaration.setText(mData.get(position).getCrowdfund_declaration());
         holder.money.setText("目前资金：" + mData.get(position).getCrowdfund_capital() + "/" + mData.get(position).getCrowdfund_aimcapital());
@@ -90,12 +91,11 @@ public class CrowdFundSupportAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        RoundedImageView imageView;
         TextView name;
         TextView declaration;
         TextView money;
-        TextView text1;
+        TextView support;
         Button btn_detail;
-        ImageView btn_share,btn_message,btn_admire;
+        ImageView imageView,btn_share,btn_message,btn_admire;
     }
 }

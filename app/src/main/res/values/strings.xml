@@ -91,5 +91,6 @@
     <string name="crowdfund_money">请输入目标金额</string>
     <string name="crowdfund_declaration">请输入宣言</string>
     <string name="btn_submit">确认并上传</string>
+    <string name="dynamic_txt">说点什么吧~~~~~</string>
 
 </resources>

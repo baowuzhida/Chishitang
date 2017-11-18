@@ -71,16 +71,16 @@ public class SeatActivity extends AppCompatActivity {
                 // myTextView.setText("您选择的是：" + adapter.getItem(arg2));//文本说明
                 if(arg2==1){
                     restaurant_seatview.setBackgroundResource(R.drawable.fir_res);
-                    myTextView.setText("您选择的是：" + adapter.getItem(arg2));
+//                    myTextView.setText("食堂：" + adapter.getItem(arg2));
 //                    restaurant_seatview.setBackground();
                 }
                 if(arg2==2){
                     restaurant_seatview.setBackgroundResource(R.drawable.sec_res);
-                    myTextView.setText("您选择的是：" + adapter.getItem(arg2));
+//                    myTextView.setText("食堂：" + adapter.getItem(arg2));
                 }
                 if(arg2==0){
                     restaurant_seatview.setBackgroundResource(R.drawable.xi_res);
-                    myTextView.setText("您选择的是：" + adapter.getItem(arg2));
+//                    myTextView.setText("食堂：" + adapter.getItem(arg2));
 
                 }
             }

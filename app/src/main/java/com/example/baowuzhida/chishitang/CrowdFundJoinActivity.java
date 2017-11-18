@@ -185,7 +185,7 @@ public class CrowdFundJoinActivity extends AppCompatActivity implements View.OnC
                             System.out.println(pathImage);
 
                             if (pathImage != null && pathImage.length() > 0) {
-                                UploadFileTask uploadFileTask = new UploadFileTask(CrowdFundJoinActivity.this);
+                                UploadFileTask uploadFileTask = new UploadFileTask(CrowdFundJoinActivity.this,"clowdfund");
                                 uploadFileTask.execute(pathImage);
                             }
                         }

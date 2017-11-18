@@ -44,6 +44,7 @@ import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
+
     private Toolbar toolbar;
     private EditText login_input_username;
     private EditText login_input_password;
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private float mWidth, mHeight;
     private View progress;
     private View mInputLayout;
+    private String user_login;
+    private String psd;
 
     private void initView() {
         progress = findViewById(R.id.layout_progress);
@@ -93,10 +96,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences remembersharePre=getSharedPreferences("RememberPassword", MODE_PRIVATE);
         boolean isRemember = remembersharePre.getBoolean("remember_password",false);
         if(isRemember){
-            String username = remembersharePre.getString("username","");
-            String password = remembersharePre.getString("password","");
-            login_input_username.setText(username);
-            login_input_password.setText(password);
+            String user_login = remembersharePre.getString("user_login","");
+            String user_psd = remembersharePre.getString("password","");
+            login_input_username.setText(user_login);
+            login_input_password.setText(user_psd);
             login_remember_password.setChecked(true);
         }
 
@@ -109,9 +112,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Register();
                 break;
             case R.id.login_login:
-                name = login_input_username.getText().toString();
+                user_login = login_input_username.getText().toString();
                 psd = login_input_password.getText().toString();
-                if (TextUtils.isEmpty(name)) {
+                if (TextUtils.isEmpty(user_login)) {
                     Toasty.info(getApplicationContext(), "姓名不能为空", Toast.LENGTH_SHORT, true).show();
                     break;
                 }else if (TextUtils.isEmpty(psd)) {
@@ -126,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mInputLayout.setVisibility(View.GONE);
                 inputAnimator(mInputLayout, mWidth, mHeight);
 
-                Login(name,psd);
+                Login(user_login,psd);
                 break;
         }
     }
@@ -158,8 +161,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LoginActivity.this.finish();
     }
 
-    String name;
-    String psd;
     Handler loginhandle=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -198,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     {
                         e.printStackTrace();
                     }
-                    saveLoginInfo(getApplicationContext(), name, psd,userBean.getUser_headimage());
+                    saveLoginInfo(getApplicationContext(), userBean.getUser_name(),psd,userBean.getUser_headimage(),user_login);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -207,13 +208,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     };
 
-    public void Login(String name,String psd){
+    public void Login(String user_login,String psd){
 
         HttpUtil httpUtil = new HttpUtil();
-        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","accountNumber="+name+"&password="+psd+"&type=login",loginhandle);
+        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","accountNumber="+user_login+"&password="+psd+"&type=login",loginhandle);
     }
 
-    public static void saveLoginInfo(Context context, String username, String password,String userimage){
+    public static void saveLoginInfo(Context context, String username, String password,String userimage,String user_login){
         //获取SharedPreferences对象
         SharedPreferences loginsharePre=context.getSharedPreferences("LoginManager", MODE_PRIVATE);
         SharedPreferences remembersharePre=context.getSharedPreferences("RememberPassword", MODE_PRIVATE);
@@ -223,11 +224,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //设置参数
         if(login_remember_password.isChecked()){
             remembereditor.putBoolean("remember_password",true);
-            remembereditor.putString("username", username);
+            remembereditor.putString("user_login", user_login);
             remembereditor.putString("password", password);
         }else{
             remembereditor.clear();
         }
+        editor.putString("user_login",user_login);
         editor.putString("username", username);
         editor.putString("password", password);
         editor.putString("userimage", userimage);

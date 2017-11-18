@@ -38,7 +38,7 @@ public class HobbyActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager vp;
     private TabLayout.Tab one,two,three;
-    private UserHobbyBean userHobbyBean = new UserHobbyBean();
+//    private UserHobbyBean userHobbyBean = new UserHobbyBean();
 
 
     protected void onCreate(Bundle savedInstanceState){
@@ -55,15 +55,7 @@ public class HobbyActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-//        getData();
-
-        loadingViewPager();
-        Intent intent = getIntent();
-        int page = intent.getIntExtra("page", -1);
-        vp.setCurrentItem(page);
-
+        getData();
 
     }
 
@@ -106,67 +98,55 @@ public class HobbyActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-//                if(msg.obj==null)
-//                    return;
+                String ss=(String)msg.obj;
+                if(msg.obj==null){
+                    return;
+                }else if(ss.equals("error"))
+                    return;
                 final LinkedList<UserHobbyBean> linkedList=new LinkedList<>();
                 JSONArray jsonArray;
-//                try {
-//                    jsonArray = new JSONArray((String) msg.obj);
-//                    for(int i = 0;i < jsonArray.length();i++) {
-//                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-//
-//                        userHobbyBean.setUb_id(jsonObject.getInt("ub_id"));
-//                        userHobbyBean.setUser_id(jsonObject.getInt("user_id"));
-//                        userHobbyBean.setUb_grain(jsonObject.getInt("ub_grain"));
-//                        userHobbyBean.setUb_beef(jsonObject.getInt("ub_beef"));
-//                        userHobbyBean.setUb_vegetables(jsonObject.getInt("ub_vegetables"));
-//                        userHobbyBean.setUb_beans(jsonObject.getInt("ub_beans"));
-//                        userHobbyBean.setUb_fat(jsonObject.getInt("ub_fat"));
-//
-//                        linkedList.add(userHobbyBean);
-//                    }
-//                }
-//                catch (Exception e)
-//                {
-//                    e.printStackTrace();
-//                }
+                try {
+                    jsonArray = new JSONArray((String) msg.obj);
+                    for(int i = 0;i < jsonArray.length();i++) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        UserHobbyBean userHobbyBean = new UserHobbyBean();
+                        userHobbyBean.setUb_id(jsonObject.getInt("ub_id"));
+                        userHobbyBean.setUser_id(jsonObject.getInt("user_id"));
+                        userHobbyBean.setUb_grain(jsonObject.getInt("ub_grain"));
+                        userHobbyBean.setUb_beef(jsonObject.getInt("ub_beef"));
+                        userHobbyBean.setUb_vegetables(jsonObject.getInt("ub_vegetables"));
+                        userHobbyBean.setUb_beans(jsonObject.getInt("ub_beans"));
+                        userHobbyBean.setUb_fat(jsonObject.getInt("ub_fat"));
 
-                userHobbyBean.setUb_id(1);
-                userHobbyBean.setUser_id(1);
-                userHobbyBean.setUb_grain(2);
-                userHobbyBean.setUb_beef(3);
-                userHobbyBean.setUb_vegetables(5);
-                userHobbyBean.setUb_beans(2);
-                userHobbyBean.setUb_fat(9);
+                        linkedList.add(userHobbyBean);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                System.out.println(linkedList.get(0));
 
+//                userHobbyBean.setUb_id(1);
+//                userHobbyBean.setUser_id(1);
+//                userHobbyBean.setUb_grain(7);
+//                userHobbyBean.setUb_beef(3);
+//                userHobbyBean.setUb_vegetables(5);
+//                userHobbyBean.setUb_beans(2);
+//                userHobbyBean.setUb_fat(9);
+                PieChartFragment pieChartFragment = new PieChartFragment();
+                ColumnChartFragment columnChartFragment = new ColumnChartFragment();
+                pieChartFragment.setinfo(linkedList.get(0));
+                columnChartFragment.setinfo(linkedList.get(0),linkedList.get(1));
+                loadingViewPager();
+                Intent intent = getIntent();
+                int page = intent.getIntExtra("page", -1);
+                vp.setCurrentItem(page);
 
-//                BarChart barChart = (BarChart) view.findViewById(R.id.barChart);
-//                int[] type = {userHobbyBean.getUb_grain(),userHobbyBean.getUb_beef(),userHobbyBean.getUb_vegetables(),userHobbyBean.getUb_beans(),userHobbyBean.getUb_fat()};
-//
-//                int[] t = {12,32,44,19,24};
-//                for (int i = 0; i < 5; i++) {
-//                    mPointFList.add(new PointF(i+1, t[i]));
-//                }
-//                mBarData.setValue(mPointFList);
-//                mBarData.setColor(Color.CYAN);
-//                mBarData.setPaintWidth(pxTodp(5));
-//                mBarData.setTextSize(pxTodp(10));
-//                mDataList.add(mBarData);
-//
-
-
-
-
-//                barChart.setDataList(mDataList);
-//                barChart.setXAxisUnit("食物种类");
-//                barChart.setYAxisUnit("点单次数");
-
-//                linkedList.add(userHobbyBean);
-//                initData(userHobbyBean);
             }
         };
         HttpUtil httpUtil = new HttpUtil();
-        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet","type=list",handler);
+        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/UserHobbyServlet","type=meavg",handler);
     }
 
 

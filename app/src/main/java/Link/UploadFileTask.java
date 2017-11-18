@@ -14,14 +14,15 @@ import es.dmoral.toasty.Toasty;
 public class UploadFileTask extends AsyncTask<String, Void, String> {
 
     public static final String requestURL = "http://119.23.205.112:8080/eatCanteen_war/ImageServlet";
+    public static String type;
     /**
      * 可变长的输入参数，与AsyncTask.exucute()对应
      */
     private AppCompatActivity context = null;
 
-    public UploadFileTask(AppCompatActivity ctx) {
+    public UploadFileTask(AppCompatActivity ctx,String type) {
         this.context = ctx;
-
+        this.type=type;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class UploadFileTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         File file = new File(params[0]);
-        return UploadUtil.uploadFile(file, requestURL);
+        return UploadUtil.uploadFile(file, requestURL,type);
     }
 
     @Override

@@ -255,6 +255,9 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray jsonArray;
                     String ss=(String)msg.obj;
                     String[] Data = ss.split("##");
+                    if(Data.length<3){
+                        return;
+                    }
                     final InitOssClient initOssClient = new InitOssClient();
                     String url= null;
                     OSS oss = initOssClient.getOss(getApplicationContext(),Data[0],Data[1],Data[2]);
@@ -323,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
     public void contralSpecial() {
         int[] icon = { R.mipmap.im_likeeat, R.mipmap.im_foodvote,
                 R.mipmap.im_datemeal,R.mipmap.im_clowdfunding, R.mipmap.im_restaurantseat};
-        String[] iconName = { "大家都爱吃", "喜爱美食投票", "约餐", "特色美食众筹", "食堂座位分布" };
+        String[] iconName = { "我的口味", "喜爱美食投票", "约餐", "特色美食众筹", "食堂座位分布" };
 
         GridView gridview = (GridView) findViewById(R.id.special_gridview);
 
@@ -353,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     public void relogin() {
 
         SharedPreferences sharedPre = getSharedPreferences("LoginManager", MODE_PRIVATE);
-        final String username = sharedPre.getString("username", "");
+        final String user_login = sharedPre.getString("user_login", "");
         String password = sharedPre.getString("password", "");
         Handler ifloginhandle = new Handler() {
             @Override
@@ -371,13 +374,13 @@ public class MainActivity extends AppCompatActivity {
                         Toasty.error(getApplicationContext(), "连接超时", Toast.LENGTH_SHORT, true).show();
                         break;
                     default:
-                        Toasty.success(getApplicationContext(), "欢迎回来 "+ username, Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(getApplicationContext(), "欢迎回来 "+ user_login, Toast.LENGTH_SHORT, true).show();
                         break;
                 }
             }
         };
-        if (!(username.equals("") || password.equals(""))) {
-            httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet", "accountNumber=" + username + "&password=" + password + "&type=login", ifloginhandle);
+        if (!(user_login.equals("") || password.equals(""))) {
+            httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet", "accountNumber=" + user_login + "&password=" + password + "&type=login", ifloginhandle);
         }
     }
     //退出时清除本地保存的用户信息
@@ -440,7 +443,6 @@ public class MainActivity extends AppCompatActivity {
             orderswipe.setRefreshing(false);
             return;
         }else{
-            Toasty.warning(getApplicationContext(), "登录!", Toast.LENGTH_SHORT, true).show();
             show_login.setVisibility(View.GONE);
             orderswipe.setVisibility(View.VISIBLE);
         }
@@ -571,22 +573,47 @@ public class MainActivity extends AppCompatActivity {
             HashMap<String, Object> item = (HashMap<String, Object>) arg0.getItemAtPosition(position);
             //显示所选Item的ItemText
             Intent intent;
+            SharedPreferences sharedPre=getSharedPreferences("LoginManager", MODE_PRIVATE);
+            final String username=sharedPre.getString("username", "");
+
             switch (position){
                 case 0:
+                    if(username.equals("")){
+                        Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+                        return;
+                    }
                     intent = new Intent(MainActivity.this, HobbyActivity.class);
                     startActivity(intent);
                     break;
                 case 1:
+                    if(username.equals("")){
+                        Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+                        return;
+                    }
                     intent = new Intent(MainActivity.this, VoteActivity.class);
                     startActivity(intent);
                     break;
                 case 2:
+                    if(username.equals("")){
+                        Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+                        return;
+                    }
+                    intent = new Intent(MainActivity.this, DateMealActivity.class);
+                    startActivity(intent);
                     break;
                 case 3:
+                    if(username.equals("")){
+                        Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+                        return;
+                    }
                     intent = new Intent(MainActivity.this, CrowdFundingActivity.class);
                     startActivity(intent);
                     break;
                 case 4:
+                    if(username.equals("")){
+                        Toasty.warning(getApplicationContext(), "您还未登录呢!", Toast.LENGTH_SHORT, true).show();
+                        return;
+                    }
                     intent = new Intent(MainActivity.this, SeatActivity.class);
                     startActivity(intent);
                     break;

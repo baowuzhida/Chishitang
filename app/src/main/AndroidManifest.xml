@@ -173,5 +173,20 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name=".DynamicJoinActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".DateMealActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".ImagePagerActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name">
+        </activity>
     </application>
 </manifest>

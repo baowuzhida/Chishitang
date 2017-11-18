@@ -13,43 +13,33 @@
         android:layout_width="match_parent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/seat_text_view"
         android:orientation="horizontal"
         android:screenOrientation="landscape">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="选择地址"
+        <!--<TextView-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="选择地址"-->
 
-            />
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#ffffff"
-            android:contentDescription="@string/app_name" />
+        <!--/>-->
 
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:entries="@array/ctype2" />
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#ffffff"
-            android:contentDescription="@string/app_name" />
 
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:entries="@array/ctype" />
 
     </LinearLayout>

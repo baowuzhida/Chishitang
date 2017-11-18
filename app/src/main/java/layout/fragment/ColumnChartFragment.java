@@ -35,7 +35,8 @@ public class ColumnChartFragment extends Fragment {
 
 
     private View view;
-    private UserHobbyBean userHobbyBean = new UserHobbyBean();
+    private static UserHobbyBean userHobbyBean = new UserHobbyBean();
+    private static UserHobbyBean otherHobbyBean = new UserHobbyBean();
     ColumnChartView columnChartView=null;
 
 
@@ -44,6 +45,8 @@ public class ColumnChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_hobby_columnchart, container, false);
 
+        columnChartView=(ColumnChartView)view.findViewById(R.id.column_content);
+        columnChartView.setColumnChartData(null);
 
 
         return view;
@@ -52,70 +55,14 @@ public class ColumnChartFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        columnChartView=(ColumnChartView)view.findViewById(R.id.column_content);
-//        generateDefaultData();
-        getData();
+
+
+        generateDefaultData(userHobbyBean,otherHobbyBean);
 
 
     }
 
-
-    private void getData() {
-
-        Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-//                if(msg.obj==null)
-//                    return;
-//                final LinkedList<UserHobbyBean> linkedList=new LinkedList<>();
-//                JSONArray jsonArray;
-//                try {
-//                    jsonArray = new JSONArray((String) msg.obj);
-//                    for(int i = 0;i < jsonArray.length();i++) {
-//                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-//
-//                        userHobbyBean.setUb_id(jsonObject.getInt("ub_id"));
-//                        userHobbyBean.setUser_id(jsonObject.getInt("user_id"));
-//                        userHobbyBean.setUb_grain(jsonObject.getInt("ub_grain"));
-//                        userHobbyBean.setUb_beef(jsonObject.getInt("ub_beef"));
-//                        userHobbyBean.setUb_vegetables(jsonObject.getInt("ub_vegetables"));
-//                        userHobbyBean.setUb_beans(jsonObject.getInt("ub_beans"));
-//                        userHobbyBean.setUb_fat(jsonObject.getInt("ub_fat"));
-//
-//                        linkedList.add(userHobbyBean);
-//                    }
-//                }
-//                catch (Exception e)
-//                {
-//                    e.printStackTrace();
-//                }
-                LinkedList<UserHobbyBean> linkedList = new LinkedList<>();
-                userHobbyBean.setUb_id(1);
-                userHobbyBean.setUser_id(1);
-                userHobbyBean.setUb_grain(7);
-                userHobbyBean.setUb_beef(3);
-                userHobbyBean.setUb_vegetables(5);
-                userHobbyBean.setUb_beans(2);
-                userHobbyBean.setUb_fat(9);
-                linkedList.add(userHobbyBean);
-
-                generateDefaultData(userHobbyBean);
-
-//                ListView listView = (ListView)view.findViewById(R.id.barChart_list);
-//                BarChartAdapter barChartAdapter = new BarChartAdapter(linkedList,getContext());
-//                listView.setAdapter(barChartAdapter);
-
-//                linkedList.add(userHobbyBean);
-//                initData(userHobbyBean);
-            }
-        };
-        HttpUtil httpUtil = new HttpUtil();
-        httpUtil.PostURL("http://119.23.205.112:8080/eatCanteen_war/LoginServlet", "type=list", handler);
-    }
-
-
-    private void generateDefaultData(UserHobbyBean userHobbyBean){
+    private void generateDefaultData(UserHobbyBean userHobbyBean,UserHobbyBean otherHobbyBean){
         //定义有多少个柱子
         int numColumns = 5;
         //定义表格实现类
@@ -126,14 +73,15 @@ public class ColumnChartFragment extends Fragment {
 
         //循环初始化每根柱子，
 //        values.add(new SubcolumnValue(, ChartUtils.pickColor()));
-        int[] value = {userHobbyBean.getUb_grain(),userHobbyBean.getUb_beef(),userHobbyBean.getUb_vegetables(),userHobbyBean.getUb_beans(),userHobbyBean.getUb_fat(),4};
+        int[] uservalue = {userHobbyBean.getUb_grain(),userHobbyBean.getUb_beef(),userHobbyBean.getUb_vegetables(),userHobbyBean.getUb_beans(),userHobbyBean.getUb_fat()};
+        int[] othervalue = {otherHobbyBean.getUb_grain(),otherHobbyBean.getUb_beef(),otherHobbyBean.getUb_vegetables(),otherHobbyBean.getUb_beans(),otherHobbyBean.getUb_fat(),4};
         String[] type = {"谷物","肉类","蔬果","豆制品","脂肪"};
         List<AxisValue> axisValuess=new ArrayList<>();
         for(int i=0;i<numColumns;i++){
             //每一根柱子中只有一根小柱子
             List<SubcolumnValue>  values=new ArrayList<>();
-            values.add(new SubcolumnValue(0, ChartUtils.pickColor()).setTarget(value[i]));
-            values.add(new SubcolumnValue(0, ChartUtils.pickColor()).setTarget(value[i]));
+            values.add(new SubcolumnValue(0, ChartUtils.pickColor()).setTarget(uservalue[i]));
+            values.add(new SubcolumnValue(0, ChartUtils.pickColor()).setTarget(othervalue[i]));
             axisValuess.add(new AxisValue(i).setLabel(type[i]));
 
             //初始化Column
@@ -144,16 +92,15 @@ public class ColumnChartFragment extends Fragment {
 
         }
 
-
-
         //给表格添加写好数据的柱子
         columnChartData = new ColumnChartData(columns);
 
         Axis axisBootom = new Axis();
         Axis axisLeft = new Axis();
 
+
         axisBootom.setValues(axisValuess);
-        axisBootom.setName("数量");
+        axisBootom.setName("数量(我的偏好/平均值）");
         axisBootom.setTextSize(10);
         axisBootom.setTextColor(BLACK);
         axisLeft.setName("类型");
@@ -169,8 +116,12 @@ public class ColumnChartFragment extends Fragment {
 
         columnChartView.setColumnChartData(columnChartData);
         //给画表格的View添加要画的表格
-        columnChartView.setColumnChartData(columnChartData);
         columnChartView.startDataAnimation(2000);//动画
 
+    }
+
+    public void setinfo(UserHobbyBean userHobbyBean,UserHobbyBean otherHobbyBean){
+        this.userHobbyBean = userHobbyBean;
+        this.otherHobbyBean = otherHobbyBean;
     }
 }
